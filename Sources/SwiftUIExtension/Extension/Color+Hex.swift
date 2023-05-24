@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Color {
+public extension Color {
     /**
      Creates a color from an hex integer (e.g. 0x3498db).
      - parameter hex: A hexa-decimal UInt64 that represents a color.
