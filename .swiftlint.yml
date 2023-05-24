@@ -19,6 +19,7 @@ identifier_name:
     - k
     - id
     - to
+    - cc
   allowed_symbols:
     - _
 
