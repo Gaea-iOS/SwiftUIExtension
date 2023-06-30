@@ -8,13 +8,13 @@
 import SwiftUI
 
 public struct ScaleFeedbackButtonStyle: ButtonStyle {
-    public let scaleOnTap: Double
+    private let scaleOnTap: Double
     
     @State private var scale = 1.0
     @State private var animation: Animation?
     
-    public init(scaleOnTap: Double = 0.95) {
-        self.scaleOnTap = scaleOnTap
+    public init(scale: Double = 0.95) {
+        scaleOnTap = scale
     }
 
     public func makeBody(configuration: Configuration) -> some View {
@@ -36,15 +36,6 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     }
 }
 
-extension View {
-    func scaleFeedback(scale: CGFloat = 0.95) -> some View {
-        ModifiedContent(
-            content: self.buttonStyle(ScaleFeedbackButtonStyle(scaleOnTap: scale)),
-            modifier: EmptyModifier()
-        )
-    }
-}
-
 struct ScaleFeedbackButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         Button {
@@ -57,6 +48,6 @@ struct ScaleFeedbackButtonStyle_Previews: PreviewProvider {
                 .cornerRadius(12)
         }
         .padding()
-        .scaleFeedback(scale: 0.95)
+        .buttonStyle(ScaleFeedbackButtonStyle(scale: 0.95))
     }
 }
