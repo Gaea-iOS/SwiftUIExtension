@@ -4,11 +4,11 @@
 
 import SwiftUI
 
-struct AnimationObserverModifier<Value: VectorArithmetic>: AnimatableModifier {
+struct AnimationObserverModifier<Value>: AnimatableModifier where Value: Equatable {
     // this is the view property that drives the animation - offset, opacity, etc.
     private let targetValue: Value
     private let onChanged: ((Value) -> Void)?
-    private let onCompleted: (() -> Void)?
+    private let onCompleted: ((Value) -> Void)?
 
     // SwiftUI implicity sets this value as the animation progresses
     var animatableData: Value {
@@ -20,7 +20,7 @@ struct AnimationObserverModifier<Value: VectorArithmetic>: AnimatableModifier {
     init(
         for observedValue: Value,
         onChanged: ((Value) -> Void)?,
-        onCompleted: (() -> Void)?
+        onCompleted: ((Value) -> Void)?
     ) {
         animatableData = observedValue
         targetValue = observedValue
@@ -36,18 +36,18 @@ struct AnimationObserverModifier<Value: VectorArithmetic>: AnimatableModifier {
         DispatchQueue.main.async {
             onChanged?(animatableData)
             if animatableData == targetValue {
-                onCompleted?()
+                onCompleted?(targetValue)
             }
         }
     }
 }
 
 extension View {
-    func animationObserver<Value: VectorArithmetic>(
+    func animationObserver<Value>(
         for value: Value,
         onChanged: ((Value) -> Void)? = nil,
-        onCompleted: (() -> Void)? = nil
-    ) -> some View {
+        onCompleted: ((Value) -> Void)? = nil
+    ) -> some View where Value: Equatable {
         modifier(
             AnimationObserverModifier(
                 for: value,
