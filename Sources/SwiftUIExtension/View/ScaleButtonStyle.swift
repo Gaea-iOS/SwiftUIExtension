@@ -13,35 +13,18 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     public init(scaleOnTap: Double = 0.95) {
         self.scaleOnTap = scaleOnTap
     }
-    
-    @State private var isTouching = false
-    @State private var scale: Double = 1.0
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .gesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { _ in
-                        // TouchDown detected
-                        self.isTouching = true
-                    }
-                    .onEnded { _ in
-                        // TouchUp detected
-                        self.isTouching = false
-                    }
-            )
-            .onChange(of: isTouching) { newValue in
-                scale = newValue ? scaleOnTap : 1.0
-            }
-            .scaleEffect(scale)
-            .animation(.easeInOut, value: scale)
+            .scaleEffect(configuration.isPressed ? scaleOnTap : 1.0 )
+            .animation(.easeInOut, value: configuration.isPressed)
     }
 }
 
 struct ScaleFeedbackButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         Button {
-            
+            print("fuck")
         } label: {
             Text("Start")
                 .frame(height: 60)
