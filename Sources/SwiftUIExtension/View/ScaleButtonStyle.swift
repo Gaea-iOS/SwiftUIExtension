@@ -13,7 +13,7 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     @State private var scale = 1.0
     private let animationDuration = 0.1
     
-    public init(scaleOnTap: Double = 0.95) {
+    public init(scaleOnTap: Double = 0.98) {
         self.scaleOnTap = scaleOnTap
     }
 
@@ -45,6 +45,6 @@ struct ScaleFeedbackButtonStyle_Previews: PreviewProvider {
                 .cornerRadius(12)
         }
         .padding()
-        .buttonStyle(ScaleFeedbackButtonStyle(scaleOnTap: 0.95))
+        .buttonStyle(ScaleFeedbackButtonStyle(scaleOnTap: 0.98))
     }
 }
