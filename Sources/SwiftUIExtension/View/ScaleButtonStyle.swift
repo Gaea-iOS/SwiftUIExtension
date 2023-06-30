@@ -13,7 +13,7 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     @State private var scale = 1.0
     @State private var animation: Animation?
     
-    public init(scaleOnTap: Double = 0.98) {
+    public init(scaleOnTap: Double = 0.9) {
         self.scaleOnTap = scaleOnTap
     }
 
@@ -29,7 +29,7 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
                 } else {
                     DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
                         scale = 1.0
-                        animation = .easeOut(duration: animationDuration)
+                        animation = .default
                     }
                 }
             }
@@ -48,6 +48,6 @@ struct ScaleFeedbackButtonStyle_Previews: PreviewProvider {
                 .cornerRadius(12)
         }
         .padding()
-        .buttonStyle(ScaleFeedbackButtonStyle(scaleOnTap: 0.98))
+        .buttonStyle(ScaleFeedbackButtonStyle(scaleOnTap: 0.9))
     }
 }
