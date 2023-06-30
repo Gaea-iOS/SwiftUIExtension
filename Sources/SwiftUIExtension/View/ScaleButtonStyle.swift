@@ -11,7 +11,7 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     public let scaleOnTap: Double
     
     @State private var scale = 1.0
-    private let animationDuration = 0.1
+    @State private var animation: Animation?
     
     public init(scaleOnTap: Double = 0.98) {
         self.scaleOnTap = scaleOnTap
@@ -20,13 +20,16 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .scaleEffect(scale)
-            .animation(.easeInOut(duration: animationDuration), value: scale)
+            .animation(animation, value: scale)
             .onChange(of: configuration.isPressed) { newValue in
+                let animationDuration = 0.1
                 if newValue {
                     scale = scaleOnTap
+                    animation = .easeIn(duration: animationDuration)
                 } else {
                     DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
                         scale = 1.0
+                        animation = .easeOut(duration: animationDuration)
                     }
                 }
             }
