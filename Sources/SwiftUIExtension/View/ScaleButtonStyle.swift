@@ -10,6 +10,10 @@ import SwiftUI
 public struct ScaleFeedbackButtonStyle: ButtonStyle {
     public let scaleOnTap: Double
     
+    public init(scaleOnTap: Double = 0.95) {
+        self.scaleOnTap = scaleOnTap
+    }
+    
     @State private var isTouching = false
     @State private var scale: Double = 1.0
 
@@ -46,6 +50,6 @@ struct ScaleFeedbackButtonStyle_Previews: PreviewProvider {
                 .cornerRadius(12)
         }
         .padding()
-        .buttonStyle(ScaleFeedbackButtonStyle(scaleOnTap: 0.9))
+        .buttonStyle(ScaleFeedbackButtonStyle(scaleOnTap: 0.95))
     }
 }
