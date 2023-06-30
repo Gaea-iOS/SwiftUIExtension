@@ -13,7 +13,7 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     @State private var scale = 1.0
     @State private var animation: Animation?
     
-    public init(scaleOnTap: Double = 0.9) {
+    public init(scaleOnTap: Double = 0.95) {
         self.scaleOnTap = scaleOnTap
     }
 
@@ -36,6 +36,15 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     }
 }
 
+extension View {
+    func scaleFeedback(scale: CGFloat = 0.95) -> some View {
+        ModifiedContent(
+            content: self.buttonStyle(ScaleFeedbackButtonStyle(scaleOnTap: scale)),
+            modifier: EmptyModifier()
+        )
+    }
+}
+
 struct ScaleFeedbackButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         Button {
@@ -48,6 +57,6 @@ struct ScaleFeedbackButtonStyle_Previews: PreviewProvider {
                 .cornerRadius(12)
         }
         .padding()
-        .buttonStyle(ScaleFeedbackButtonStyle(scaleOnTap: 0.9))
+        .scaleFeedback(scale: 0.95)
     }
 }
