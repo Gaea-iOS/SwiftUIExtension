@@ -17,7 +17,7 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? scaleOnTap : 1.0 )
-            .animation(.easeInOut, value: configuration.isPressed)
+            .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
     }
 }
 
