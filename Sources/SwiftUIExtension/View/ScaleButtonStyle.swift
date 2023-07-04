@@ -9,17 +9,21 @@ import SwiftUI
 
 public struct ScaleFeedbackButtonStyle: ButtonStyle {
     private let scaleOnTap: Double
+    private let anchor: UnitPoint
+    private let condiction: () -> Bool
     
     @State private var scale = 1.0
-    private let anchor: UnitPoint
+    
     @State private var animation: Animation?
     
     public init(
         scale: Double = 0.95,
-        anchor: UnitPoint = .center
+        anchor: UnitPoint = .center,
+        when condiction: @escaping @autoclosure () -> Bool = true
     ) {
         scaleOnTap = scale
         self.anchor = anchor
+        self.condiction = condiction
     }
 
     public func makeBody(configuration: Configuration) -> some View {
@@ -27,14 +31,16 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
             .scaleEffect(scale, anchor: anchor)
             .animation(animation, value: scale)
             .onChange(of: configuration.isPressed) { newValue in
-                let animationDuration = 0.1
-                if newValue {
-                    scale = scaleOnTap
-                    animation = .easeIn(duration: animationDuration)
-                } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
-                        scale = 1.0
-                        animation = .default
+                if condiction() {
+                    let animationDuration = 0.1
+                    if newValue {
+                        scale = scaleOnTap
+                        animation = .easeIn(duration: animationDuration)
+                    } else {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+                            scale = 1.0
+                            animation = .default
+                        }
                     }
                 }
             }
