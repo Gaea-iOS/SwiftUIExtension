@@ -19,7 +19,7 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     public init(
         scale: Double = 0.95,
         anchor: UnitPoint = .center,
-        when condiction: @escaping @autoclosure () -> Bool = true
+        scaleWhen condiction: @escaping @autoclosure () -> Bool = true
     ) {
         scaleOnTap = scale
         self.anchor = anchor
