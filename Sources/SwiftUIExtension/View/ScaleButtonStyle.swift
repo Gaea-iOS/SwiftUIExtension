@@ -11,15 +11,17 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     private let scaleOnTap: Double
     
     @State private var scale = 1.0
+    private let anchor: UnitPoint
     @State private var animation: Animation?
     
-    public init(scale: Double = 0.95) {
+    public init(scale: Double = 0.95, anchor: UnitPoint = .center) {
         scaleOnTap = scale
+        self.anchor = anchor
     }
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(scale)
+            .scaleEffect(scale, anchor: anchor)
             .animation(animation, value: scale)
             .onChange(of: configuration.isPressed) { newValue in
                 let animationDuration = 0.1
