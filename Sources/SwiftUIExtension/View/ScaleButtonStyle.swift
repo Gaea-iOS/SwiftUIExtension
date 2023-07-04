@@ -14,7 +14,10 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     private let anchor: UnitPoint
     @State private var animation: Animation?
     
-    public init(scale: Double = 0.95, anchor: UnitPoint = .center) {
+    public init(
+        scale: Double = 0.95,
+        anchor: UnitPoint = .center
+    ) {
         scaleOnTap = scale
         self.anchor = anchor
     }
