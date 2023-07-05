@@ -1,9 +1,6 @@
-//
-//  File.swift
-//  
-//
-//  Created by 王小涛 on 2023/5/30.
-//
+// OffsetObservingScrollView.swift
+// Copyright (c) 2023 Nostudio
+// Created by Jerry X T Wang on 2023/5/30.
 
 import SwiftUI
 
@@ -16,7 +13,7 @@ public struct OffsetObservingScrollView<Content: View>: View {
     @ViewBuilder public var content: () -> Content
 
     private let coordinateSpaceName = UUID()
-    
+
     public init(
         axes: Axis.Set = [.vertical],
         showsIndicators: Bool = true,
@@ -25,7 +22,7 @@ public struct OffsetObservingScrollView<Content: View>: View {
     ) {
         self.axes = axes
         self.showsIndicators = showsIndicators
-        self._offset = offset
+        _offset = offset
         self.content = content
     }
 

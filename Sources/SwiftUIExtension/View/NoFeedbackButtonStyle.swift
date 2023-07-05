@@ -1,9 +1,6 @@
-//
-//  File.swift
-//  
-//
-//  Created by 王小涛 on 2023/6/30.
-//
+// NoFeedbackButtonStyle.swift
+// Copyright (c) 2023 Nostudio
+// Created by Jerry X T Wang on 2023/6/30.
 
 import SwiftUI
 

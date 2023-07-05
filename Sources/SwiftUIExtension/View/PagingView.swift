@@ -1,9 +1,6 @@
-//
-//  File.swift
-//  
-//
-//  Created by Jerrywang on 2023/5/11.
-//
+// PagingView.swift
+// Copyright (c) 2023 Nostudio
+// Created by Jerry X T Wang on 2023/7/5.
 
 import SwiftUI
 

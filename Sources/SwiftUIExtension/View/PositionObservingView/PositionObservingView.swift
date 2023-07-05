@@ -1,9 +1,6 @@
-//
-//  File.swift
-//  
-//
-//  Created by 王小涛 on 2023/5/30.
-//
+// PositionObservingView.swift
+// Copyright (c) 2023 Nostudio
+// Created by Jerry X T Wang on 2023/5/30.
 
 import SwiftUI
 
@@ -30,7 +27,7 @@ private extension PositionObservingView {
     enum PreferenceKey: SwiftUI.PreferenceKey {
         static var defaultValue: CGPoint { .zero }
 
-        static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) {
+        static func reduce(value _: inout CGPoint, nextValue _: () -> CGPoint) {
             // No-op
         }
     }

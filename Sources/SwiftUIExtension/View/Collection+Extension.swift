@@ -1,15 +1,12 @@
-//
-//  File.swift
-//  
-//
-//  Created by Jerrywang on 2023/4/1.
-//
+// Collection+Extension.swift
+// Copyright (c) 2023 Nostudio
+// Created by Jerry X T Wang on 2023/5/30.
 
 import Foundation
 
-extension Collection {
-    public func filterNil<Wrapped>() -> [Wrapped]
-    where Element == Optional<Wrapped>
+public extension Collection {
+    func filterNil<Wrapped>() -> [Wrapped]
+        where Element == Wrapped?
     {
         compactMap { $0 }
     }

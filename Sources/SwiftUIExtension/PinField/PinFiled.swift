@@ -1,16 +1,13 @@
-//
-//  File.swift
-//  
-//
-//  Created by Jerrywang on 2023/3/31.
-//
+// PinFiled.swift
+// Copyright (c) 2023 Nostudio
+// Created by Jerry X T Wang on 2023/5/30.
 
 import SwiftUI
 
 public struct PinField<Content: View>: View {
     @Binding var pin: Pin
     @ViewBuilder var content: () -> Content
-        
+
     public init(
         pin: Binding<Pin>,
         @ViewBuilder _ content: @escaping () -> Content
@@ -18,14 +15,14 @@ public struct PinField<Content: View>: View {
         _pin = pin
         self.content = content
     }
-    
+
     public var body: some View {
-            content()
+        content()
             .background(
                 inputField
             )
     }
-    
+
     @ViewBuilder
     var inputField: some View {
         let text = Binding<String>(
@@ -46,10 +43,9 @@ public struct PinField<Content: View>: View {
     }
 }
 
-
 struct PinField_Previews: PreviewProvider {
     @State static var pin: Pin = .init(length: .four)
-    
+
     static var previews: some View {
         PinField(
             pin: $pin
@@ -59,6 +55,3 @@ struct PinField_Previews: PreviewProvider {
         .background(Color.red)
     }
 }
-
-
-

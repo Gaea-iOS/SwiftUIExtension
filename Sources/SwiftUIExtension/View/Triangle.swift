@@ -1,15 +1,12 @@
-//
-//  File.swift
-//  
-//
-//  Created by 王小涛 on 2023/7/4.
-//
+// Triangle.swift
+// Copyright (c) 2023 Nostudio
+// Created by Jerry X T Wang on 2023/7/4.
 
 import SwiftUI
 
 public struct Triangle: Shape {
     public init() {}
-    
+
     public func path(in rect: CGRect) -> Path {
         var path = Path()
         path.move(to: CGPoint(x: rect.midX, y: rect.minY))

@@ -1,6 +1,6 @@
-// AnimationCompletionObserverModifier.swift
+// AnimationObserver.swift
 // Copyright (c) 2023 Nostudio
-// Created by Jerry X T Wang on 2023/2/3.
+// Created by Jerry X T Wang on 2023/5/30.
 
 import SwiftUI
 

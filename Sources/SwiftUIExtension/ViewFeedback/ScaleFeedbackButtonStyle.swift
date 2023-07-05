@@ -1,9 +1,6 @@
-//
-//  File.swift
-//  
-//
-//  Created by 王小涛 on 2023/6/30.
-//
+// ScaleFeedbackButtonStyle.swift
+// Copyright (c) 2023 Nostudio
+// Created by Jerry X T Wang on 2023/6/30.
 
 import SwiftUI
 
@@ -11,11 +8,11 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
     private let scaleOnTap: Double
     private let anchor: UnitPoint
     private let condiction: () -> Bool
-    
+
     @State private var scale = 1.0
-    
+
     @State private var animation: Animation?
-    
+
     public init(
         scale: Double = 0.95,
         anchor: UnitPoint = .center,

@@ -1,6 +1,6 @@
 // HapticFeedback.swift
 // Copyright (c) 2023 Nostudio
-// Created by Jerry X T Wang on 2023/3/30.
+// Created by Jerry X T Wang on 2023/5/30.
 
 import SwiftUI
 

@@ -1,7 +1,6 @@
-
 // Carousel.swift
 // Copyright (c) 2023 Nostudio
-// Created by Jerry X T Wang on 2023/3/30.
+// Created by Jerry X T Wang on 2023/5/30.
 
 import SwiftUI
 
@@ -23,9 +22,9 @@ public struct Carousel<Content: View>: View {
     let content: () -> Content
 
     @Binding private var currentIndex: Int
-    
+
     private let animation: Animation? = .easeOut
-    
+
     @GestureState private var isPressed: Bool = false
 
     public init(
@@ -41,20 +40,19 @@ public struct Carousel<Content: View>: View {
     }
 
     private func cardLayout(ofIndex index: Int, in containerSize: CGSize, dragOffset: CGFloat) -> (size: CGSize, offset: CGFloat) {
-
         let containerWidth = containerSize.width
 
         let itemWidth = containerWidth - 2 * config.margin
 
         let cardMovement = itemWidth + config.spacing
-        
+
         let cardSize = CGSize(width: itemWidth, height: containerSize.height)
 
         func offset(ofIndex index: Int, dragOffset: CGFloat) -> CGFloat {
             let offset = config.margin - cardMovement * CGFloat(index) + dragOffset
             return offset
         }
-        
+
         var currentOffset = offset(ofIndex: index, dragOffset: dragOffset)
         let firstIndexOffset = offset(ofIndex: 0, dragOffset: 0)
         let lastIndexOffset = offset(ofIndex: numberOfItems - 1, dragOffset: 0)
@@ -71,23 +69,23 @@ public struct Carousel<Content: View>: View {
             let factor = (deltaMoveMax * 2 - deltaMove) / (deltaMoveMax * 2)
             currentOffset = lastIndexOffset - deltaMove * max(0.5, factor)
         }
-        
+
         return (size: cardSize, offset: currentOffset)
     }
 
     public var body: some View {
         GeometryReader { proxy in
             let containerSize = proxy.frame(in: .global).size
-            let cardLayout = self.cardLayout(ofIndex: currentIndex, in: containerSize, dragOffset: dragOffset)
+            let cardLayout = cardLayout(ofIndex: currentIndex, in: containerSize, dragOffset: dragOffset)
 
             HStack(spacing: config.spacing) {
                 content()
-                .transition(AnyTransition.slide)
-                .frame(
-                    width: cardLayout.size.width,
-                    height: cardLayout.size.height,
-                    alignment: .center
-                )
+                    .transition(AnyTransition.slide)
+                    .frame(
+                        width: cardLayout.size.width,
+                        height: cardLayout.size.height,
+                        alignment: .center
+                    )
             }
             .offset(x: cardLayout.offset)
             .animation(animation, value: currentIndex)
@@ -97,7 +95,7 @@ public struct Carousel<Content: View>: View {
                 DragGesture(
                     minimumDistance: 0
                 )
-                .updating($isPressed, body: { value, state, transaction in
+                .updating($isPressed, body: { _, state, _ in
                     state = true
                 })
                 .onChanged { state in
@@ -160,5 +158,3 @@ struct Carousel_Previews: PreviewProvider {
         }
     }
 }
-
-
