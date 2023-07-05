@@ -25,7 +25,7 @@ public struct Semicircle: Shape {
         path.addArc(
             center: CGPoint(
                 x: rect.midX,
-                y: rect.midY
+                y: rect.maxY
             ),
             radius: radius,
             startAngle: startAngle,
@@ -42,5 +42,6 @@ struct Semicircle_Previews: PreviewProvider {
             startAngle: Angle(degrees: 180)
         )
         .background(Color.blue)
+        .frame(width: 200, height: 100)
     }
 }
