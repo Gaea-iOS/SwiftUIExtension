@@ -16,6 +16,12 @@ extension CalendarX {
             }
             return weeks
         }
+        
+        public func days(in calendar: Calendar = .current) -> [Day] {
+            calendar
+                .datesInMonth(month, year: year)
+                .map(Day.init(date:))
+        }
 
         public init(year: Int, month: Int) {
             self.year = year
