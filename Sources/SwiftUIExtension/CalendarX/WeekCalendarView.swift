@@ -10,7 +10,7 @@ public struct WeekCalendarView<DayView>: View where DayView: View {
 
     @ViewBuilder public let dayView: (CalendarX.Day) -> DayView
     
-    init(
+    public init(
         week: CalendarX.Week,
         spacing: CGFloat,
         dayView: @escaping (CalendarX.Day) -> DayView

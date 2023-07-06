@@ -12,7 +12,7 @@ public struct WeeksCalendarView<WeekView>: View where WeekView: View {
 
     @ViewBuilder public let weekView: (CalendarX.Week) -> WeekView
     
-    init(
+    public init(
         weeks: [CalendarX.Week],
         spacing: CGFloat,
         currentWeek: Binding<CalendarX.Week>,
