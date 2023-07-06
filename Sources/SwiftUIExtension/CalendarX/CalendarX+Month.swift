@@ -4,8 +4,8 @@
 
 import Foundation
 
-public extension CalendarX {
-    struct Month: Hashable, Equatable, Codable {
+extension CalendarX {
+    public struct Month: Hashable, Equatable, Codable {
         public let year: Int
         public let month: Int
 
