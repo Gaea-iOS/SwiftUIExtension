@@ -11,6 +11,7 @@ extension CalendarX {
         public let year: Int
         public let month: Int
         public let weekOfMonth: Int
+        public let weekday: Int
         public let day: Int
 
         public var calendarWeek: CalendarX.Week {
@@ -29,11 +30,13 @@ extension CalendarX {
             year: Int,
             month: Int,
             weekOfMonth: Int,
+            weekday: Int,
             day: Int
         ) {
             self.year = year
             self.month = month
             self.weekOfMonth = weekOfMonth
+            self.weekday = weekday
             self.day = day
         }
 
@@ -42,6 +45,7 @@ extension CalendarX {
             year = calendar.component(.year, from: date)
             month = calendar.component(.month, from: date)
             weekOfMonth = calendar.component(.weekOfMonth, from: date)
+            weekday = calendar.component(.weekday, from: date)
             day = calendar.component(.day, from: date)
         }
 
