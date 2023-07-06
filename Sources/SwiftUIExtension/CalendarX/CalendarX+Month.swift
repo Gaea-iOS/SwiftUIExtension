@@ -21,6 +21,22 @@ extension CalendarX {
             self.year = year
             self.month = month
         }
+        
+        public func next() -> Self {
+            if month == 12 {
+                return .init(year: year + 1, month: 1)
+            } else {
+                return .init(year: year, month: month + 1)
+            }
+        }
+        
+        public func previous() -> Self {
+            if month == 1 {
+                return .init(year: year - 1, month: 12)
+            } else {
+                return .init(year: year, month: month - 1)
+            }
+        }
     }
 }
 
