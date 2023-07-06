@@ -31,7 +31,10 @@ public struct WeeksCalendarView<WeekView>: View where WeekView: View {
                 get: {
                     weeks.firstIndex(of: currentWeek)!
                 }, set: {
-                    currentWeek = weeks[$0]
+                    let index = weeks.firstIndex { $0 == currentWeek }
+                    if index != $0 {
+                        currentWeek = weeks[$0]
+                    }
                 }
             )
         ) {

@@ -31,7 +31,10 @@ public struct MonthsCalendarView<MonthView>: View where MonthView: View {
                 get: {
                     months.firstIndex(of: currentMonth)!
                 }, set: {
-                    currentMonth = months[$0]
+                    let index = months.firstIndex { $0 == currentMonth }
+                    if index != $0 {
+                        currentMonth = months[$0]
+                    }
                 }
             )
         ) {
