@@ -5,7 +5,7 @@
 import Foundation
 
 extension CalendarX {
-    public struct Year: Hashable, Equatable, Codable {
+    public struct Year: Hashable, Equatable, Sendable, Codable {
         public let year: Int
 
         public var months: [Month] {
