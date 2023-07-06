@@ -11,6 +11,18 @@ public struct WeeksCalendarView<WeekView>: View where WeekView: View {
     @Binding public var currentWeek: CalendarX.Week
 
     @ViewBuilder public let weekView: (CalendarX.Week) -> WeekView
+    
+    init(
+        weeks: [CalendarX.Week],
+        spacing: CGFloat,
+        currentWeek: Binding<CalendarX.Week>,
+        weekView: @escaping (CalendarX.Week) -> WeekView
+    ) {
+        self.weeks = weeks
+        self.spacing = spacing
+        _currentWeek = currentWeek
+        self.weekView = weekView
+    }
 
     public var body: some View {
         PagingView(

@@ -11,6 +11,18 @@ public struct MonthsCalendarView<MonthView>: View where MonthView: View {
     @Binding public var currentMonth: CalendarX.Month
 
     @ViewBuilder public let monthView: (CalendarX.Month) -> MonthView
+    
+    public init(
+        months: [CalendarX.Month],
+        spacing: CGFloat,
+        currentMonth: Binding<CalendarX.Month>,
+        monthView: @escaping (CalendarX.Month) -> MonthView
+    ) {
+        self.months = months
+        self.spacing = spacing
+        _currentMonth = currentMonth
+        self.monthView = monthView
+    }
 
     public var body: some View {
         PagingView(

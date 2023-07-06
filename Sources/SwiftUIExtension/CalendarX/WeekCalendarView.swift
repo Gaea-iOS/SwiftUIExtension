@@ -9,6 +9,16 @@ public struct WeekCalendarView<DayView>: View where DayView: View {
     public let spacing: CGFloat
 
     @ViewBuilder public let dayView: (CalendarX.Day) -> DayView
+    
+    init(
+        week: CalendarX.Week,
+        spacing: CGFloat,
+        dayView: @escaping (CalendarX.Day) -> DayView
+    ) {
+        self.week = week
+        self.spacing = spacing
+        self.dayView = dayView
+    }
 
     public var body: some View {
         let days = week.days()
