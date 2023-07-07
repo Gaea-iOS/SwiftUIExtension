@@ -25,13 +25,9 @@ public struct MonthsCalendarView<MonthView>: View where MonthView: View {
         TabView(selection: $currentMonth) {
             ForEach(months.indices, id: \.self) { index in
                 let month = months[index]
-                Color.clear.overlay(
-                    alignment: .top
-                ) {
-                    monthView(
-                        month
-                    )
-                }
+                monthView(
+                    month
+                )
                 .tag(month)
             }
         }
