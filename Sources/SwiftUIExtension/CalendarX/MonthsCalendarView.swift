@@ -31,9 +31,8 @@ public struct MonthsCalendarView<MonthView>: View where MonthView: View {
                     monthView(
                         month
                     )
-                    .tag(month)
                 }
-                
+                .tag(month)
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
