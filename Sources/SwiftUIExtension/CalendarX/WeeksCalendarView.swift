@@ -31,8 +31,8 @@ public struct WeeksCalendarView<WeekView>: View where WeekView: View {
                     weekView(
                         week
                     )
-                    .tag(week)
                 }
+                .tag(week)
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
