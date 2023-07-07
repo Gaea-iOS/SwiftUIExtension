@@ -5,7 +5,7 @@
 import Foundation
 
 public struct CalendarX {
-    static let calendar: Calendar = .autoupdatingCurrent
+    public static let calendar: Calendar = .autoupdatingCurrent
 }
 
 extension CalendarX {
