@@ -13,7 +13,7 @@ public struct MonthCalendarView<WeekView>: View where WeekView: View {
     public init(
         month: CalendarX.Month,
         spacing: CGFloat,
-        weekView: @escaping (CalendarX.Week) -> WeekView
+        @ViewBuilder weekView: @escaping (CalendarX.Week) -> WeekView
     ) {
         self.month = month
         self.spacing = spacing

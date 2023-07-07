@@ -14,7 +14,7 @@ public struct MonthsCalendarView<MonthView>: View where MonthView: View {
     public init(
         months: [CalendarX.Month],
         currentMonth: Binding<CalendarX.Month>,
-        monthView: @escaping (CalendarX.Month) -> MonthView
+        @ViewBuilder monthView: @escaping (CalendarX.Month) -> MonthView
     ) {
         self.months = months
         _currentMonth = currentMonth

@@ -14,7 +14,7 @@ public struct WeeksCalendarView<WeekView>: View where WeekView: View {
     public init(
         weeks: [CalendarX.Week],
         currentWeek: Binding<CalendarX.Week>,
-        weekView: @escaping (CalendarX.Week) -> WeekView
+        @ViewBuilder weekView: @escaping (CalendarX.Week) -> WeekView
     ) {
         self.weeks = weeks
         _currentWeek = currentWeek
