@@ -8,16 +8,26 @@ extension CalendarX {
     public struct Month: Hashable, Equatable, Sendable, Codable {
         public let year: Int
         public let month: Int
-        
-        public let weeks: [Week]
-        public let days: [Day]
 
         public init(year: Int, month: Int) {
             self.year = year
             self.month = month
-            
-            weeks = Month.weeksInMonth(month, year: year)
-            days = Month.daysInMonth(month, year: year)
+        }
+        
+        public func days() -> [Day] {
+            let calendar = CalendarX.calendar
+            let days = calendar
+                .daysInMonth(month, year: year)
+            return days
+        }
+        
+        public func weeks() -> [Week] {
+            let calendar = CalendarX.calendar
+            let numberOfWeeks = calendar.numberOfWeeksInMonth(month, year: year)!
+            let weeks: [CalendarX.Week] = (1 ... numberOfWeeks).map {
+                .init(year: year, month: month, weekOfMonth: $0)
+            }
+            return weeks
         }
         
         public func next() -> Self {
@@ -35,24 +45,6 @@ extension CalendarX {
                 return .init(year: year, month: month - 1)
             }
         }
-    }
-}
-
-private extension CalendarX.Month {
-    static func weeksInMonth(_ month: Int, year: Int) -> [CalendarX.Week] {
-        let calendar = CalendarX.calendar
-        let numberOfWeeks = calendar.numberOfWeeksInMonth(month, year: year)!
-        let weeks: [CalendarX.Week] = (1 ... numberOfWeeks).map {
-            .init(year: year, month: month, weekOfMonth: $0)
-        }
-        return weeks
-    }
-    
-    static func daysInMonth(_ month: Int, year: Int) -> [CalendarX.Day] {
-        let calendar = CalendarX.calendar
-        let days = calendar
-            .daysInMonth(month, year: year)
-        return days
     }
 }
 
