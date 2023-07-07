@@ -67,9 +67,9 @@ struct MonthsCalendarView_Previews: PreviewProvider {
         MonthsCalendarView(
             months: [
                 .init(year: 2023, month: 7),
-                .init(year: 2023, month: 5),
-                .init(year: 2023, month: 1),
-                .init(year: 2022, month: 8),
+                .init(year: 2023, month: 6),
+                .init(year: 2023, month: 7),
+                .init(year: 2023, month: 4),
             ],
             spacing: 2,
             currentMonth: $currentMonth

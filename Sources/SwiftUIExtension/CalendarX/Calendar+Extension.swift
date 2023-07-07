@@ -26,25 +26,27 @@ extension Calendar {
 
         return dates
     }
-
+    
     func datesInWeekOfMonth(_ weekOfMonth: Int, month: Int, year: Int) -> [Date] {
-        var components = DateComponents()
-        components.year = year
-        components.month = month
-        components.weekOfMonth = weekOfMonth
-        components.weekday = firstWeekday
-
-        guard let firstDayOfWeek = date(from: components) else {
-            return []
+        var dates = [Date]()
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.weekOfMonth = weekOfMonth
+        dateComponents.weekday = firstWeekday
+        
+        guard let firstDayOfWeek = date(from: dateComponents) else {
+            return dates
         }
-
-        var dates: [Date] = []
-        var date = firstDayOfWeek
-        for _ in 1 ... 7 {
-            dates.append(date)
-            date = self.date(byAdding: .day, value: 1, to: date)!
+        
+        let lastDayOfWeek = date(byAdding: .day, value: 6, to: firstDayOfWeek)!
+        
+        var currentDate = firstDayOfWeek
+        while currentDate <= lastDayOfWeek {
+            dates.append(currentDate)
+            currentDate = date(byAdding: .day, value: 1, to: currentDate)!
         }
-
+        
         return dates
     }
 }
