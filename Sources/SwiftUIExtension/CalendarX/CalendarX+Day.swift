@@ -16,18 +16,6 @@ extension CalendarX {
         public let weekday: Int
         public let day: Int
 
-        public var calendarWeek: CalendarX.Week {
-            .init(year: year, month: month, weekOfMonth: weekOfMonth)
-        }
-
-        public var calendarMonth: CalendarX.Month {
-            .init(year: year, month: month)
-        }
-
-        public var calendarYear: CalendarX.Year {
-            .init(year: year)
-        }
-
         private init(
             year: Int,
             month: Int,
@@ -54,6 +42,17 @@ extension CalendarX {
         public func date() -> Date {
             let calendar = CalendarX.calendar
             return calendar.date(Ofyear: year, month: month, day: day)!
+        }
+        
+        public func dayInSameday(in month: CalendarX.Month) -> Self {
+            let calendar = CalendarX.calendar
+            let monthsDiff = month.month - self.month
+            let date = calendar.date(date: date(), byAddingMonths: monthsDiff)
+            return .init(date: date)
+        }
+        
+        public func dayOfSameWeekday(in week: CalendarX.Week) -> Self {
+            week.days().first { $0.weekday == weekday }!
         }
     }
 }
