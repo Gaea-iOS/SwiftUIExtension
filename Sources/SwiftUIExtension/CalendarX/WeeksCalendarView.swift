@@ -25,9 +25,13 @@ public struct WeeksCalendarView<WeekView>: View where WeekView: View {
         TabView(selection: $currentWeek) {
             ForEach(weeks.indices, id: \.self) { index in
                 let week = weeks[index]
-                weekView(
-                    week
-                )
+                Color.clear.overlay(
+                    alignment: .top
+                ) {
+                    weekView(
+                        week
+                    )
+                }
                 .tag(week)
             }
         }
