@@ -8,15 +8,22 @@ extension CalendarX {
     public struct Year: Hashable, Equatable, Sendable, Codable {
         public let year: Int
 
-        public var months: [Month] {
-            (0 ... 12).map {
-                .init(year: year, month: $0)
-            }
-        }
+        public let months: [Month]
 
         public init(year: Int) {
             self.year = year
+            
+            months = Year.monthsInYear(year)
         }
+    }
+}
+
+private extension CalendarX.Year {
+    static func monthsInYear(_ year: Int) -> [CalendarX.Month] {
+        let months: [CalendarX.Month] = (0 ... 12).map {
+            .init(year: year, month: $0)
+        }
+        return months
     }
 }
 

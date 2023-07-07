@@ -9,18 +9,34 @@ extension CalendarX {
         public let year: Int
         public let month: Int
         public let weekOfMonth: Int
-
-        public func days() -> [Day] {
-            let calendar = CalendarX.calendar
-            return calendar
-                .daysInWeekOfMonth(weekOfMonth, month: month, year: year)
-        }
+        public let days: [Day]
 
         public init(year: Int, month: Int, weekOfMonth: Int) {
             self.year = year
             self.month = month
             self.weekOfMonth = weekOfMonth
+            
+            days = Week.daysInWeekOfMonth(
+                weekOfMonth,
+                month: month,
+                year: year)
         }
+    }
+}
+
+private extension CalendarX.Week {
+    static func daysInWeekOfMonth(
+        _ weekOfMonth: Int,
+        month: Int,
+        year: Int
+    ) -> [CalendarX.Day] {
+        let calendar = CalendarX.calendar
+        let days = calendar.daysInWeekOfMonth(
+            weekOfMonth,
+            month: month,
+            year: year
+        )
+        return days
     }
 }
 

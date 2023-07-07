@@ -21,10 +21,9 @@ public struct WeekCalendarView<DayView>: View where DayView: View {
     }
 
     public var body: some View {
-        let days = week.days()
         HStack(spacing: spacing) {
-            ForEach(days.indices, id: \.self) { index in
-                let day = days[index]
+            ForEach(week.days.indices, id: \.self) { index in
+                let day = week.days[index]
                 dayView(day)
             }
         }
