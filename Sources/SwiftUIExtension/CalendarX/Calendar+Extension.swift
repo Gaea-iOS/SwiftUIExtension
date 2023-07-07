@@ -94,13 +94,3 @@ extension Calendar {
         return result
     }
 }
-
-
-extension Calendar {
-    func date(date: Date, byAddingMonths months: Int) -> Date {
-        var dateComponents = DateComponents()
-        dateComponents.month = months
-        let date = self.date(byAdding: dateComponents, to: date)!
-        return date
-    }
-}

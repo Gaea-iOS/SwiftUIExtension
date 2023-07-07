@@ -33,7 +33,6 @@ public struct MonthCalendarView<WeekView>: View where WeekView: View {
 }
 
 struct MonthCalendarView_Previews: PreviewProvider {
-    static let height = 128.0
     static var previews: some View {
         MonthCalendarView(
             month: .init(year: 2023, month: 7),

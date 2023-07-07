@@ -56,9 +56,19 @@ extension CalendarX {
         }
         
         public func dayWithSameday(in month: CalendarX.Month) -> Self {
-            let calendar = CalendarX.calendar
+            
+            let yearDiff = month.year - self.year
             let monthsDiff = month.month - self.month
-            let date = calendar.date(date: date(), byAddingMonths: monthsDiff)
+            let dateComponents: DateComponents = .init(
+                year: yearDiff, month: monthsDiff
+            )
+            
+            let calendar = CalendarX.calendar
+            let date = calendar.date(
+                byAdding: dateComponents,
+                to: date()
+            )!
+            
             return .init(date: date)
         }
         

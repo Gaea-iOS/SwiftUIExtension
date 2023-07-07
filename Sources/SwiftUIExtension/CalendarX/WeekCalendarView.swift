@@ -48,7 +48,7 @@ struct WeekCalendarView_Previews: PreviewProvider {
 }
 
 struct DayView: View {
-    let height = 128.0
+    let height = 80.0
     let day: CalendarX.Day
     
     var body: some View {
