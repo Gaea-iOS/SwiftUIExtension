@@ -44,14 +44,14 @@ extension CalendarX {
             return calendar.date(Ofyear: year, month: month, day: day)!
         }
         
-        public func dayInSameday(in month: CalendarX.Month) -> Self {
+        public func dayWithSameday(in month: CalendarX.Month) -> Self {
             let calendar = CalendarX.calendar
             let monthsDiff = month.month - self.month
             let date = calendar.date(date: date(), byAddingMonths: monthsDiff)
             return .init(date: date)
         }
         
-        public func dayOfSameWeekday(in week: CalendarX.Week) -> Self {
+        public func dayWithSameWeekday(in week: CalendarX.Week) -> Self {
             week.days().first { $0.weekday == weekday }!
         }
     }
