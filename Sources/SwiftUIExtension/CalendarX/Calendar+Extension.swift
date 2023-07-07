@@ -5,7 +5,7 @@
 import Foundation
 
 extension Calendar {
-    func datesInMonth(_ month: Int, year: Int) -> [Date] {
+    func daysInMonth(_ month: Int, year: Int) -> [CalendarX.Day] {
         var components = DateComponents()
         components.year = year
         components.month = month
@@ -24,11 +24,11 @@ extension Calendar {
             date = self.date(byAdding: .day, value: 1, to: date)!
         }
 
-        return dates
+        let days = dates.map(CalendarX.Day.init(date:))
+        return days
     }
     
-    func datesInWeekOfMonth(_ weekOfMonth: Int, month: Int, year: Int) -> [Date] {
-        var dates = [Date]()
+    func daysInWeekOfMonth(_ weekOfMonth: Int, month: Int, year: Int) -> [CalendarX.Day] {
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month
@@ -36,27 +36,30 @@ extension Calendar {
         dateComponents.weekday = firstWeekday
         
         guard let firstDayOfWeek = date(from: dateComponents) else {
-            return dates
+            return []
         }
         
         let lastDayOfWeek = date(byAdding: .day, value: 6, to: firstDayOfWeek)!
         
+        var dates = [Date]()
         var currentDate = firstDayOfWeek
         while currentDate <= lastDayOfWeek {
             dates.append(currentDate)
             currentDate = date(byAdding: .day, value: 1, to: currentDate)!
         }
         
-        return dates
+        let days = dates.map(CalendarX.Day.init(date:))
+        return days
     }
 }
 
 extension Calendar {
-    func numberOfWeeksInYear(_ year: Int, month: Int) -> Int? {
+    func numberOfWeeksInMonth(_ month: Int, year: Int) -> Int? {
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month
         dateComponents.day = 1
+
         guard let date = date(from: dateComponents) else { return nil }
         let rangeOfWeeks = range(of: .weekOfMonth, in: .month, for: date)
         return rangeOfWeeks?.count
@@ -97,7 +100,6 @@ extension Calendar {
     func date(date: Date, byAddingMonths months: Int) -> Date {
         var dateComponents = DateComponents()
         dateComponents.month = months
-
         let date = self.date(byAdding: dateComponents, to: date)!
         return date
     }

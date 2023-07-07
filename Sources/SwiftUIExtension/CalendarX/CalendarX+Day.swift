@@ -5,7 +5,7 @@
 import Foundation
 
 public struct CalendarX {
-    public static let calendar: Calendar = .current
+    public static let calendar: Calendar = .init(identifier: .gregorian)
 }
 
 extension CalendarX {
@@ -15,6 +15,17 @@ extension CalendarX {
         public let weekOfMonth: Int
         public let weekday: Int
         public let day: Int
+        
+        init(year: Int, month: Int, day: Int) {
+            var components: DateComponents = .init()
+            components.year = year
+            components.month = month
+            components.day = day
+            
+            let calendar = CalendarX.calendar
+            let date = calendar.date(from: components)!
+            self.init(date: date)
+        }
 
         private init(
             year: Int,

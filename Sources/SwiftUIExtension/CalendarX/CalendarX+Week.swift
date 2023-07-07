@@ -13,8 +13,7 @@ extension CalendarX {
         public func days() -> [Day] {
             let calendar = CalendarX.calendar
             return calendar
-                .datesInWeekOfMonth(weekOfMonth, month: month, year: year)
-                .map(Day.init(date:))
+                .daysInWeekOfMonth(weekOfMonth, month: month, year: year)
         }
 
         public init(year: Int, month: Int, weekOfMonth: Int) {

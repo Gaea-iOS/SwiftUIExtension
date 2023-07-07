@@ -11,7 +11,7 @@ extension CalendarX {
 
         public func weeks() -> [CalendarX.Week] {
             let calendar = CalendarX.calendar
-            let numberOfWeeks = calendar.numberOfWeeksInYear(year, month: month)!
+            let numberOfWeeks = calendar.numberOfWeeksInMonth(month, year: year)!
             let weeks: [Week] = (1 ... numberOfWeeks).map {
                 .init(year: year, month: month, weekOfMonth: $0)
             }
@@ -21,8 +21,7 @@ extension CalendarX {
         public func days() -> [CalendarX.Day] {
             let calendar = CalendarX.calendar
             return calendar
-                .datesInMonth(month, year: year)
-                .map(Day.init(date:))
+                .daysInMonth(month, year: year)
         }
 
         public init(year: Int, month: Int) {
