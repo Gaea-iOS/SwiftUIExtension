@@ -25,10 +25,15 @@ public struct MonthsCalendarView<MonthView>: View where MonthView: View {
         TabView(selection: $currentMonth) {
             ForEach(months.indices, id: \.self) { index in
                 let month = months[index]
-                monthView(
-                    month
-                )
-                .tag(month)
+                Color.clear.overlay(
+                    alignment: .top
+                ) {
+                    monthView(
+                        month
+                    )
+                    .tag(month)
+                }
+                
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
