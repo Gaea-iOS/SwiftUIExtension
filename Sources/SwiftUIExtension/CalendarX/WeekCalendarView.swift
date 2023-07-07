@@ -37,7 +37,7 @@ struct WeekCalendarView_Previews: PreviewProvider {
             week: .init(
                 year: 2023,
                 month: 7,
-                weekOfMonth: 2
+                weekOfMonth: 1
             ),
             spacing: 2,
             dayView: DayView.init(day:)
