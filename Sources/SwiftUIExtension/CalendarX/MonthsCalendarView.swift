@@ -6,7 +6,6 @@ import SwiftUI
 
 public struct MonthsCalendarView<MonthView>: View where MonthView: View {
     public let months: [CalendarX.Month]
-    public let spacing: CGFloat
 
     @Binding public var currentMonth: CalendarX.Month
 
@@ -14,30 +13,16 @@ public struct MonthsCalendarView<MonthView>: View where MonthView: View {
     
     public init(
         months: [CalendarX.Month],
-        spacing: CGFloat,
         currentMonth: Binding<CalendarX.Month>,
         monthView: @escaping (CalendarX.Month) -> MonthView
     ) {
         self.months = months
-        self.spacing = spacing
         _currentMonth = currentMonth
         self.monthView = monthView
     }
 
     public var body: some View {
-        PagingView(
-            config: .init(margin: 0, spacing: spacing),
-            page: Binding(
-                get: {
-                    months.firstIndex(of: currentMonth)!
-                }, set: {
-                    let currentIndex = months.firstIndex { $0 == currentMonth }
-                    if $0 != currentIndex {
-                        currentMonth = months[$0]
-                    }
-                }
-            )
-        ) {
+        TabView(selection: $currentMonth) {
             ForEach(months.indices, id: \.self) { index in
                 let month = months[index]
                 Color.clear.overlay(
@@ -71,7 +56,6 @@ struct MonthsCalendarView_Previews: PreviewProvider {
                 .init(year: 2023, month: 7),
                 .init(year: 2023, month: 4),
             ],
-            spacing: 2,
             currentMonth: $currentMonth
         ) { month in
             MonthCalendarView(

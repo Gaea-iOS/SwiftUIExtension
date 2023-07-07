@@ -21,11 +21,9 @@ public struct MonthCalendarView<WeekView>: View where WeekView: View {
     }
 
     public var body: some View {
-        let weeks = month.weeks
-
         VStack(spacing: spacing) {
-            ForEach(weeks.indices, id: \.self) { index in
-                let week = weeks[index]
+            ForEach(month.weeks.indices, id: \.self) { index in
+                let week = month.weeks[index]
                 weekView(week)
             }
         }

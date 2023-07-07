@@ -6,7 +6,6 @@ import SwiftUI
 
 public struct WeeksCalendarView<WeekView>: View where WeekView: View {
     public let weeks: [CalendarX.Week]
-    public let spacing: CGFloat
 
     @Binding public var currentWeek: CalendarX.Week
 
@@ -14,30 +13,16 @@ public struct WeeksCalendarView<WeekView>: View where WeekView: View {
     
     public init(
         weeks: [CalendarX.Week],
-        spacing: CGFloat,
         currentWeek: Binding<CalendarX.Week>,
         weekView: @escaping (CalendarX.Week) -> WeekView
     ) {
         self.weeks = weeks
-        self.spacing = spacing
         _currentWeek = currentWeek
         self.weekView = weekView
     }
 
     public var body: some View {
-        PagingView(
-            config: .init(margin: 0, spacing: spacing),
-            page: Binding(
-                get: {
-                    weeks.firstIndex(of: currentWeek)!
-                }, set: {
-                    let currentIndex = weeks.firstIndex { $0 == currentWeek }
-                    if $0 != currentIndex {
-                        currentWeek = weeks[$0]
-                    }
-                }
-            )
-        ) {
+        TabView(selection: $currentWeek) {
             ForEach(weeks.indices, id: \.self) { index in
                 let week = weeks[index]
                 Color.clear.overlay(
@@ -63,7 +48,6 @@ struct WeeksCalendarView_Previews: PreviewProvider {
                 .init(year: 2022, month: 5, weekOfMonth: 3),
                 .init(year: 2025, month: 7, weekOfMonth: 4),
             ],
-            spacing: 2,
             currentWeek: .constant(.init(year: 2023, month: 3, weekOfMonth: 1))
         ) { week in
             WeekCalendarView(
