@@ -10,8 +10,9 @@ extension CalendarX {
         public let month: Int
         public let weekOfMonth: Int
 
-        public func days(in calendar: Calendar = .current) -> [Day] {
-            calendar
+        public func days() -> [Day] {
+            let calendar = CalendarX.calendar
+            return calendar
                 .datesInWeekOfMonth(weekOfMonth, month: month, year: year)
                 .map(Day.init(date:))
         }

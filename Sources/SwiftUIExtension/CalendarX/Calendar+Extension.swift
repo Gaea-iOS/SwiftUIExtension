@@ -34,12 +34,12 @@ extension Calendar {
         components.weekOfMonth = weekOfMonth
         components.weekday = firstWeekday
 
-        guard let startDate = date(from: components) else {
+        guard let firstDayOfWeek = date(from: components) else {
             return []
         }
 
         var dates: [Date] = []
-        var date = startDate
+        var date = firstDayOfWeek
         for _ in 1 ... 7 {
             dates.append(date)
             date = self.date(byAdding: .day, value: 1, to: date)!
@@ -58,5 +58,34 @@ extension Calendar {
         guard let date = date(from: dateComponents) else { return nil }
         let rangeOfWeeks = range(of: .weekOfMonth, in: .month, for: date)
         return rangeOfWeeks?.count
+    }
+}
+
+extension Calendar {
+    func date(Ofyear year: Int, month: Int, day: Int) -> Date? {
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        if let date = self.date(from: dateComponents) {
+            return date
+        } else {
+            return nil
+        }
+    }
+}
+
+extension Calendar {
+    func pastNMonths(_ nMonths: Int, fromDate: Date) -> [CalendarX.Month] {
+        let result: [CalendarX.Month] = (0 ..< nMonths).reversed()
+            .map { monthOffset in
+                let targetDate = date(byAdding: .month, value: -monthOffset, to: fromDate)!
+                let year = component(.year, from: targetDate)
+                let month = component(.month, from: targetDate)
+                
+                return .init(year: year, month: month)
+            }
+
+        return result
     }
 }

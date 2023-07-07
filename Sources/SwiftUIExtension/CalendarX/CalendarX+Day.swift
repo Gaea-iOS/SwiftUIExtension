@@ -4,7 +4,9 @@
 
 import Foundation
 
-public struct CalendarX {}
+public struct CalendarX {
+    static let calendar: Calendar = .autoupdatingCurrent
+}
 
 extension CalendarX {
     public  struct Day: Hashable, Equatable, Sendable, Codable {
@@ -41,7 +43,7 @@ extension CalendarX {
         }
 
         public init(date: Date) {
-            let calendar = Calendar.current
+            let calendar = CalendarX.calendar
             year = calendar.component(.year, from: date)
             month = calendar.component(.month, from: date)
             weekOfMonth = calendar.component(.weekOfMonth, from: date)
@@ -49,8 +51,9 @@ extension CalendarX {
             day = calendar.component(.day, from: date)
         }
 
-        public func date(in calendar: Calendar = .current) -> Date {
-            .init(year: year, month: month, day: day, in: calendar)!
+        public func date() -> Date {
+            let calendar = CalendarX.calendar
+            return calendar.date(Ofyear: year, month: month, day: day)!
         }
     }
 }
