@@ -16,6 +16,8 @@ extension CalendarX {
         public let weekday: Int
         public let day: Int
         
+        public static let today: Self = .init(date: Date())
+        
         init(year: Int, month: Int, day: Int) {
             var components: DateComponents = .init()
             components.year = year
@@ -56,7 +58,6 @@ extension CalendarX {
         }
         
         public func dayWithSameday(in month: CalendarX.Month) -> Self {
-            
             let yearDiff = month.year - self.year
             let monthsDiff = month.month - self.month
             let dateComponents: DateComponents = .init(
