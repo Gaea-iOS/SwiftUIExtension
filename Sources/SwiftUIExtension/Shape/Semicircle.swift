@@ -4,44 +4,102 @@
 
 import SwiftUI
 
-public struct Semicircle: Shape {
-    let startAngle: Angle
-    let endAngle: Angle
-    let clockwise: Bool
+public func pointOnClosewiseCircle(
+    withCenter center: CGPoint,
+    radius: CGFloat,
+    angle: Angle
+) -> CGPoint {
+    let x = center.x + radius * cos(angle.radians)
+    let y = center.y + radius * sin(angle.radians)
+    return .init(x: x, y: y)
+}
 
-    public init(
+public struct ClockwiseArc {
+    public let startAngle: Angle
+    public let endAngle: Angle
+    let closewise: Bool = false
+    
+    init(
         startAngle: Angle,
-        clockwise: Bool = false
+        angle: Angle
     ) {
         self.startAngle = startAngle
-        endAngle = startAngle + Angle(degrees: 180)
-        self.clockwise = clockwise
+        self.endAngle = startAngle + angle
     }
+}
+
+public struct SemicircleShape: Shape {
+    public static let arc: ClockwiseArc = .init(
+        startAngle: .init(degrees: 180),
+        angle: .init(degrees: 180)
+    )
 
     public func path(in rect: CGRect) -> Path {
         let radius: CGFloat = rect.width / 2
+        let center: CGPoint = .init(
+            x: rect.midX,
+            y: rect.maxY
+        )
 
         var path = Path()
+        
         path.addArc(
-            center: CGPoint(
-                x: rect.midX,
-                y: rect.maxY
-            ),
+            center: center,
             radius: radius,
-            startAngle: startAngle,
-            endAngle: endAngle,
-            clockwise: false
+            startAngle: SemicircleShape.arc.startAngle,
+            endAngle: SemicircleShape.arc.endAngle,
+            clockwise: SemicircleShape.arc.closewise
         )
         return path
     }
 }
 
-struct Semicircle_Previews: PreviewProvider {
+struct SemicircleShape_Previews: PreviewProvider {
+    static let lineWidth: CGFloat = 26
     static var previews: some View {
-        Semicircle(
-            startAngle: Angle(degrees: 180)
+        SemicircleShape(
+
         )
+//        .fill(Color.red)
+        .stroke(
+            .linearGradient(
+                colors: [
+                    Color.red,
+                    Color.green
+                ],
+                startPoint: .leading,
+                endPoint: .trailing
+            ),
+            style: StrokeStyle(
+                lineWidth: lineWidth,
+                lineCap: .round,
+                lineJoin: .round
+            )
+        )
+        .overlay(
+            GeometryReader { geometry in
+                let radius = geometry.size.width / 2
+                let centerX = geometry.size.width / 2
+                let centerY = geometry.size.height
+
+                let point = pointOnClosewiseCircle(
+                    withCenter: CGPoint(x: centerX, y: centerY),
+                    radius: radius,
+                    angle: SemicircleShape.arc.startAngle + Angle(degrees: 50)
+                )
+
+                Image(
+                    systemName: "circle.hexagonpath"
+                )
+                .foregroundColor(Color.red)
+                .background(Color.red)
+                .frame(width: 13, height: 13)
+                .position(point)
+            }
+        )
+        .frame(width: 300, height: 150, alignment: .bottom)
+        .background(Color.purple)
+        .padding(lineWidth/2)
         .background(Color.blue)
-        .frame(width: 200, height: 100)
     }
 }
