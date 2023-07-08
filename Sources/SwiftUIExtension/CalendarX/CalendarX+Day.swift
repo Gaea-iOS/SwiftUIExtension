@@ -16,7 +16,9 @@ extension CalendarX {
         public let weekday: Int
         public let day: Int
         
-        public static let today: Self = .init(date: Date())
+        public static func today() -> Self {
+            .init(date: Date())
+        }
         
         init(year: Int, month: Int, day: Int) {
             var components: DateComponents = .init()
