@@ -33,6 +33,8 @@ public struct Semicircle: Shape {
         startAngle: .init(degrees: 180),
         angle: .init(degrees: 180)
     )
+    
+    public init() {}
 
     public func path(in rect: CGRect) -> Path {
         let radius: CGFloat = rect.width / 2
