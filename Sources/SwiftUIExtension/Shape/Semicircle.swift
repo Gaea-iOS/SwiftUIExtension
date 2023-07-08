@@ -28,7 +28,7 @@ public struct ClockwiseArc {
     }
 }
 
-public struct SemicircleShape: Shape {
+public struct Semicircle: Shape {
     public static let arc: ClockwiseArc = .init(
         startAngle: .init(degrees: 180),
         angle: .init(degrees: 180)
@@ -46,18 +46,18 @@ public struct SemicircleShape: Shape {
         path.addArc(
             center: center,
             radius: radius,
-            startAngle: SemicircleShape.arc.startAngle,
-            endAngle: SemicircleShape.arc.endAngle,
-            clockwise: SemicircleShape.arc.closewise
+            startAngle: Semicircle.arc.startAngle,
+            endAngle: Semicircle.arc.endAngle,
+            clockwise: Semicircle.arc.closewise
         )
         return path
     }
 }
 
-struct SemicircleShape_Previews: PreviewProvider {
+struct Semicircle_Previews: PreviewProvider {
     static let lineWidth: CGFloat = 26
     static var previews: some View {
-        SemicircleShape(
+        Semicircle(
 
         )
 //        .fill(Color.red)
@@ -85,7 +85,7 @@ struct SemicircleShape_Previews: PreviewProvider {
                 let point = pointOnClosewiseCircle(
                     withCenter: CGPoint(x: centerX, y: centerY),
                     radius: radius,
-                    angle: SemicircleShape.arc.startAngle + Angle(degrees: 50)
+                    angle: Semicircle.arc.startAngle + Angle(degrees: 50)
                 )
 
                 Image(
