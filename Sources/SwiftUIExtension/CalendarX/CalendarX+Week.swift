@@ -53,7 +53,7 @@ extension CalendarX.Week: Comparable {
 public extension [CalendarX.Week] {
     func removingDuplicates() -> Self {
         var newWeeks: Self = []
-        for week in self where !newWeeks.contains(where: { $0.days == week.days }) {
+        for week in self where !newWeeks.contains(week) {
             newWeeks.append(week)
         }
         return newWeeks
