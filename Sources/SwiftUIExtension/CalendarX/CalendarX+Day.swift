@@ -88,6 +88,10 @@ extension CalendarX {
 }
 
 public extension CalendarX.Day {
+    var month: CalendarX.Month {
+        .init(year: year, month: month)
+    }
+    
     var week: CalendarX.Week {
         .init(year: year, month: month, weekOfMonth: weekOfMonth)
     }
