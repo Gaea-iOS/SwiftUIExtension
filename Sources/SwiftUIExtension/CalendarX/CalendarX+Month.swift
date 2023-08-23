@@ -61,9 +61,9 @@ private extension CalendarX.Month {
     }
 }
 
-extension CalendarX.Month: Comparable {
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.year < rhs.year
-            || (lhs.year == rhs.year && lhs.month < rhs.month)
-    }
-}
+//extension CalendarX.Month: Comparable {
+//    public static func < (lhs: Self, rhs: Self) -> Bool {
+//        lhs.year < rhs.year
+//            || (lhs.year == rhs.year && lhs.month < rhs.month)
+//    }
+//}

@@ -46,13 +46,13 @@ private extension CalendarX.Week {
     }
 }
 
-extension CalendarX.Week: Comparable {
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.year < rhs.year
-            || (lhs.year == rhs.year && lhs.month < rhs.month)
-            || (lhs.year == rhs.year && lhs.month == rhs.month && lhs.weekOfMonth < rhs.weekOfMonth)
-    }
-}
+//extension CalendarX.Week: Comparable {
+//    public static func < (lhs: Self, rhs: Self) -> Bool {
+//        lhs.year < rhs.year
+//            || (lhs.year == rhs.year && lhs.month < rhs.month)
+//            || (lhs.year == rhs.year && lhs.month == rhs.month && lhs.weekOfMonth < rhs.weekOfMonth)
+//    }
+//}
 
 public extension [CalendarX.Week] {
     func removingDuplicates() -> Self {

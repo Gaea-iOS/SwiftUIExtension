@@ -31,8 +31,8 @@ private extension CalendarX.Year {
     }
 }
 
-extension CalendarX.Year: Comparable {
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.year < rhs.year
-    }
-}
+//extension CalendarX.Year: Comparable {
+//    public static func < (lhs: Self, rhs: Self) -> Bool {
+//        lhs.year < rhs.year
+//    }
+//}
