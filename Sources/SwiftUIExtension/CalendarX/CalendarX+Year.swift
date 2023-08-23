@@ -9,6 +9,10 @@ extension CalendarX {
         public let year: Int
 
         public let months: [Month]
+        
+        public static func == (lhs: Self, rhs: Self) -> Bool {
+            lhs.year == rhs.year
+        }
 
         public init(year: Int) {
             self.year = year

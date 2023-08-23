@@ -16,6 +16,12 @@ extension CalendarX {
         public let weekday: Int
         public let day: Int
         
+        public static func == (lhs: Self, rhs: Self) -> Bool {
+            lhs.year == rhs.year
+            && lhs.month == rhs.month
+            && lhs.day == rhs.day
+        }
+        
         public static var today: Self {
             .init(date: Date())
         }
