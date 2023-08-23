@@ -26,7 +26,7 @@ extension CalendarX {
             .init(date: Date())
         }
         
-        init(year: Int, month: Int, day: Int) {
+        public init(year: Int, month: Int, day: Int) {
             var components: DateComponents = .init()
             components.year = year
             components.month = month
