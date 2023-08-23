@@ -54,12 +54,3 @@ private extension CalendarX.Week {
 //    }
 //}
 
-public extension [CalendarX.Week] {
-    func removingDuplicates() -> Self {
-        var newWeeks: Self = []
-        for week in self where !newWeeks.contains(week) {
-            newWeeks.append(week)
-        }
-        return newWeeks
-    }
-}
