@@ -39,6 +39,10 @@ public struct ShareView: UIViewControllerRepresentable {
     }()
 
     public let callback: Callback? = nil
+    
+    public init(activityItems: [Any]) {
+        self.activityItems = activityItems
+    }
 
     public func makeUIViewController(context _: Context) -> UIActivityViewController {
         let controller = UIActivityViewController(
