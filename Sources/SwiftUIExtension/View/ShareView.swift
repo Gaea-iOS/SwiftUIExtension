@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct ShareSheetView: UIViewControllerRepresentable {
+public struct ShareView: UIViewControllerRepresentable {
     public typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
     public let activityItems: [Any]
     public let applicationActivities: [UIActivity]? = nil
