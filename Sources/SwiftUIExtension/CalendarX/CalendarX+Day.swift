@@ -12,9 +12,9 @@ extension CalendarX {
     public  struct Day: Hashable, Equatable, Sendable, Codable {
         public let year: Int
         public let month: Int
+        public let day: Int
         public let weekOfMonth: Int
         public let weekday: Int
-        public let day: Int
         
         public static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.year == rhs.year
