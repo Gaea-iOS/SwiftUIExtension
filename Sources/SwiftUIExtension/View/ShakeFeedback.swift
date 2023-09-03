@@ -18,7 +18,7 @@ public enum ShakeFeedback {
     case error
     case warning
 
-    var action: () -> Void {
+    public var action: () -> Void {
         switch self {
         case .selection:
             return { UISelectionFeedbackGenerator().selectionChanged() }
