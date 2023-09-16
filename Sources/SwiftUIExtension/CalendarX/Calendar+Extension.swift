@@ -5,7 +5,14 @@
 import Foundation
 
 extension Calendar {
-    func daysInMonth(_ month: Int, year: Int) -> [CalendarX.Day] {
+    public func datesInSameMonth(with date: Date) -> [Date] {
+        let year = component(.year, from: date)
+        let month = component(.month, from: date)
+        
+        return datesInMonth(month, year: year)
+    }
+    
+    func datesInMonth(_ month: Int, year: Int) -> [Date] {
         var components = DateComponents()
         components.year = year
         components.month = month
@@ -24,11 +31,10 @@ extension Calendar {
             date = self.date(byAdding: .day, value: 1, to: date)!
         }
 
-        let days = dates.map(CalendarX.Day.init(date:))
-        return days
+        return dates
     }
     
-    func daysInWeekOfMonth(_ weekOfMonth: Int, month: Int, year: Int) -> [CalendarX.Day] {
+    func datesInWeekOfMonth(_ weekOfMonth: Int, month: Int, year: Int) -> [Date] {
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month
@@ -48,8 +54,7 @@ extension Calendar {
             currentDate = date(byAdding: .day, value: 1, to: currentDate)!
         }
         
-        let days = dates.map(CalendarX.Day.init(date:))
-        return days
+        return dates
     }
 }
 

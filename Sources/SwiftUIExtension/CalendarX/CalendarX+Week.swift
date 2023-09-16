@@ -17,11 +17,14 @@ extension CalendarX {
             self.weekOfMonth = weekOfMonth
             
             let calendar = CalendarX.calendar
-            self.days = calendar.daysInWeekOfMonth(
+            
+            let dates = calendar.datesInWeekOfMonth(
                 weekOfMonth,
                 month: month,
                 year: year
             )
+            
+            self.days = dates.map(CalendarX.Day.init(date:))
         }
     }
 }
@@ -33,11 +36,12 @@ private extension CalendarX.Week {
         year: Int
     ) -> [CalendarX.Day] {
         let calendar = CalendarX.calendar
-        let days = calendar.daysInWeekOfMonth(
+        let dates = calendar.datesInWeekOfMonth(
             weekOfMonth,
             month: month,
             year: year
         )
+        let days = dates.map(CalendarX.Day.init(date:))
         return days
     }
 }
