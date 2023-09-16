@@ -62,6 +62,15 @@ private extension CalendarX.Month {
     }
 }
 
+extension CalendarX.Month {
+    public static func current(calendar: Calendar = .current) -> Self {
+        let date: Date = .now
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        return .init(year: year, month: month)
+    }
+}
+
 //extension CalendarX.Month: Comparable {
 //    public static func < (lhs: Self, rhs: Self) -> Bool {
 //        lhs.year < rhs.year
