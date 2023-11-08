@@ -12,6 +12,10 @@ public struct OffsetObservingScrollView<Content: View>: View {
     @Binding public var offset: CGPoint
     @ViewBuilder public var content: () -> Content
 
+    // The name of our coordinate space doesn't have to be
+    // stable between view updates (it just needs to be
+    // consistent within this view), so we'll simply use a
+    // plain UUID for it:
     private let coordinateSpaceName = UUID()
 
     public init(

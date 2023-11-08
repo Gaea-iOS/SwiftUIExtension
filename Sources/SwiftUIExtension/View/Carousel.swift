@@ -6,11 +6,39 @@ import SwiftUI
 
 public struct Carousel<Content: View>: View {
     public struct Config: Equatable {
-        public let margin: CGFloat
-        public let spacing: CGFloat
+        enum MarginOrItemWidth: Equatable {
+            case margin(CGFloat)
+            case itemWidth(CGFloat)
+            
+            func itemWidth(containerWidth: CGFloat) -> CGFloat {
+                switch self {
+                case let .margin(margin):
+                    containerWidth - 2 * margin
+                case let .itemWidth(itemWidth):
+                    itemWidth
+                }
+            }
+            
+            func margin(containerWidth: CGFloat) -> CGFloat {
+                switch self {
+                case let .margin(margin):
+                    margin
+                case let .itemWidth(itemWidth):
+                    (containerWidth - itemWidth) / 2
+                }
+            }
+        }
+        
+        let marginOrItemWidth: MarginOrItemWidth
+        let spacing: CGFloat
 
         public init(margin: CGFloat, spacing: CGFloat) {
-            self.margin = margin
+            self.marginOrItemWidth = .margin(margin)
+            self.spacing = spacing
+        }
+        
+        public init(itemWidth: CGFloat, spacing: CGFloat) {
+            self.marginOrItemWidth = .itemWidth(itemWidth)
             self.spacing = spacing
         }
     }
@@ -42,14 +70,15 @@ public struct Carousel<Content: View>: View {
     private func cardLayout(ofIndex index: Int, in containerSize: CGSize, dragOffset: CGFloat) -> (size: CGSize, offset: CGFloat) {
         let containerWidth = containerSize.width
 
-        let itemWidth = containerWidth - 2 * config.margin
+        let margin = config.marginOrItemWidth.margin(containerWidth: containerWidth)
+        let itemWidth = config.marginOrItemWidth.itemWidth(containerWidth: containerWidth)
 
         let cardMovement = itemWidth + config.spacing
 
         let cardSize = CGSize(width: itemWidth, height: containerSize.height)
 
         func offset(ofIndex index: Int, dragOffset: CGFloat) -> CGFloat {
-            let offset = config.margin - cardMovement * CGFloat(index) + dragOffset
+            let offset = margin - cardMovement * CGFloat(index) + dragOffset
             return offset
         }
 
@@ -86,6 +115,7 @@ public struct Carousel<Content: View>: View {
                         height: cardLayout.size.height,
                         alignment: .center
                     )
+                    .clipped()
             }
             .offset(x: cardLayout.offset)
             .animation(animation, value: currentIndex)
@@ -136,6 +166,7 @@ struct Carousel_Previews: PreviewProvider {
 
     static var previews: some View {
         Carousel(
+            config: .init(itemWidth: 120, spacing: 2),
             numberOfItems: items.count,
             currentIndex: $currentIndex
         ) {
@@ -151,7 +182,8 @@ struct Carousel_Previews: PreviewProvider {
                     .scaleEffect(y: scale)
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(width: 300)
+        .background(Color.blue)
         .onChange(of: currentIndex) { _ in
             let impactMed = UIImpactFeedbackGenerator(style: .medium)
             impactMed.impactOccurred()
