@@ -121,6 +121,7 @@ public struct Carousel<Content: View>: View {
             .animation(animation, value: currentIndex)
             .animation(animation, value: itemLayout.offset)
             .animation(animation, value: config)
+            .contentShape(Rectangle())
             .simultaneousGesture(
                 DragGesture(
                     minimumDistance: 0
