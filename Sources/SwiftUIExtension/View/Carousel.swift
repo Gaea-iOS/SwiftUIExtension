@@ -149,7 +149,7 @@ public struct Carousel<Content: View>: View {
                         spacing: config.spacing
                     )
 
-                    let newIndex = currentIndex + pageMoved
+                    let newIndex = currentIndex - pageMoved
                     if newIndex < 0 {
                         currentIndex = 0
                     } else if newIndex > CGFloat(numberOfItems - 1) {
