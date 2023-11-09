@@ -141,6 +141,7 @@ public struct Carousel<Content: View>: View {
                     state = true
                 })
                 .onChanged { state in
+                    let movedDistance = state.translation.width - dragOffset
                     dragOffset = state.translation.width
                     
                     let pageMoved = pageMoved(
