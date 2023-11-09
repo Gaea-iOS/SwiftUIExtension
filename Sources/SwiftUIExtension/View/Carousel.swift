@@ -141,16 +141,15 @@ public struct Carousel<Content: View>: View {
                     state = true
                 })
                 .onChanged { state in
-                    let movedDistance = state.translation.width - dragOffset
                     dragOffset = state.translation.width
                     
                     let pageMoved = pageMoved(
-                        movedDistance: movedDistance,
+                        movedDistance: state.translation.width,
                         itemWidth: itemLayout.size.width,
                         spacing: config.spacing
                     )
 
-                    let newIndex = currentIndex - pageMoved
+                    let newIndex = -pageMoved
                     if newIndex < 0 {
                         currentIndex = 0
                     } else if newIndex > CGFloat(numberOfItems - 1) {
