@@ -160,7 +160,7 @@ public struct Carousel<Content: View>: View {
                 }
                 .onEnded { state in
                     dragOffset = 0
-                    currentIndex = round(currentIndex)
+//                    currentIndex = round(currentIndex)
                 }
             )
             .onChange(of: isPressed) { newValue in
