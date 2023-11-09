@@ -49,7 +49,7 @@ public struct Carousel<Content: View>: View {
     let numberOfItems: Int
     let content: () -> Content
 
-    @Binding private var currentIndex: Int
+    @Binding private var currentIndex: CGFloat
 
     private let animation: Animation? = .easeOut
 
@@ -63,11 +63,18 @@ public struct Carousel<Content: View>: View {
     ) {
         self.config = config
         self.numberOfItems = numberOfItems
-        _currentIndex = currentIndex
+        _currentIndex = .init(
+            get: {
+                CGFloat(currentIndex.wrappedValue)
+            },
+            set: { value in
+                currentIndex.wrappedValue = Int(value)
+            }
+        )
         self.content = content
     }
 
-    private func itemLayout(ofIndex index: Int, in containerSize: CGSize, dragOffset: CGFloat) -> (size: CGSize, offset: CGFloat) {
+    private func itemLayout(ofIndex index: CGFloat, in containerSize: CGSize, dragOffset: CGFloat) -> (size: CGSize, offset: CGFloat) {
         let containerWidth = containerSize.width
 
         let margin = config.marginOrItemWidth.margin(containerWidth: containerWidth)
@@ -77,14 +84,14 @@ public struct Carousel<Content: View>: View {
 
         let cardSize = CGSize(width: itemWidth, height: containerSize.height)
 
-        func offset(ofIndex index: Int, dragOffset: CGFloat) -> CGFloat {
-            let offset = margin - cardMovement * CGFloat(index) + dragOffset
+        func offset(ofIndex index: CGFloat, dragOffset: CGFloat) -> CGFloat {
+            let offset = margin - cardMovement * index + dragOffset
             return offset
         }
 
         var currentOffset = offset(ofIndex: index, dragOffset: dragOffset)
         let firstIndexOffset = offset(ofIndex: 0, dragOffset: 0)
-        let lastIndexOffset = offset(ofIndex: numberOfItems - 1, dragOffset: 0)
+        let lastIndexOffset = offset(ofIndex: CGFloat(numberOfItems - 1), dragOffset: 0)
 
         if currentOffset > firstIndexOffset {
             let deltaMove = currentOffset - firstIndexOffset
@@ -105,7 +112,11 @@ public struct Carousel<Content: View>: View {
     public var body: some View {
         GeometryReader { proxy in
             let containerSize = proxy.frame(in: .global).size
-            let itemLayout = itemLayout(ofIndex: currentIndex, in: containerSize, dragOffset: dragOffset)
+            let itemLayout = itemLayout(
+                ofIndex: CGFloat(currentIndex),
+                in: containerSize,
+                dragOffset: dragOffset
+            )
 
             HStack(spacing: config.spacing) {
                 content()
@@ -131,26 +142,25 @@ public struct Carousel<Content: View>: View {
                 })
                 .onChanged { state in
                     dragOffset = state.translation.width
-                }
-                .onEnded { state in
-                    dragOffset = 0
                     
-                    let (pageMovedIntPart, pageMovedDecimalPart) = pageMoved(
-                        movedDistance: abs(state.translation.width),
+                    let pageMoved = pageMoved(
+                        movedDistance: state.translation.width,
                         itemWidth: itemLayout.size.width,
                         spacing: config.spacing
                     )
-                    let totalPageMoved = pageMovedIntPart + (pageMovedDecimalPart > 0.3 ? 1 : 0)
 
-                    guard totalPageMoved > 0  else { return }
-                    
-                    if state.translation.width < 0 {
-                        let newIndex = currentIndex + totalPageMoved
-                        currentIndex = min(newIndex, numberOfItems - 1)
-                    } else if state.translation.width > 0 {
-                        let newIndex = currentIndex - totalPageMoved
-                        currentIndex = max(newIndex, 0)
+                    let newIndex = currentIndex + pageMoved
+                    if newIndex < 0 {
+                        currentIndex = 0
+                    } else if newIndex > CGFloat(numberOfItems - 1) {
+                        currentIndex = CGFloat(numberOfItems - 1)
+                    } else {
+                        currentIndex = newIndex
                     }
+                }
+                .onEnded { state in
+                    dragOffset = 0
+                    currentIndex = round(currentIndex)
                 }
             )
             .onChange(of: isPressed) { newValue in
@@ -159,17 +169,14 @@ public struct Carousel<Content: View>: View {
         }
     }
     
-    private func pageMoved(
+    func pageMoved(
         movedDistance: CGFloat,
         itemWidth: CGFloat,
         spacing: CGFloat
-    ) -> (intPart: Int, decimalPart: CGFloat) {
-        let pageWidth = itemWidth + config.spacing
+    ) -> CGFloat {
+        let pageWidth = itemWidth + spacing
         let pageMoved = movedDistance / pageWidth
-        let pageMovedIntPart = Int(pageMoved)
-        let pageMovedDecimalPart = pageMoved.truncatingRemainder(dividingBy: 1)
-        
-        return (intPart: pageMovedIntPart, decimalPart: pageMovedDecimalPart)
+        return pageMoved
     }
 }
 
