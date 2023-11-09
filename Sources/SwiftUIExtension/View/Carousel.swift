@@ -145,7 +145,7 @@ public struct Carousel<Content: View>: View {
                     dragOffset = state.translation.width
                     
                     let pageMoved = pageMoved(
-                        movedDistance: state.translation.width,
+                        movedDistance: movedDistance,
                         itemWidth: itemLayout.size.width,
                         spacing: config.spacing
                     )
