@@ -131,20 +131,20 @@ public struct Carousel<Content: View>: View {
                 .onChanged { state in
                     dragOffset = state.translation.width
                     
-                    let movedDistance = Int(abs(state.translation.width))
-                    let pageWidth = Int(itemLayout.size.width + config.spacing)
-                    
-                    if movedDistance % pageWidth == 0 {
-                        let pageMoved = pageMoved(
-                            movedDistance: movedDistance,
-                            pageWidth: pageWidth
-                        )
-                        guard pageMoved > 0  else { return }
-                        if dragOffset < 0 {
-                            let newIndex = currentIndex + pageMoved
+                    let (pageMovedIntPart, pageMovedDecimalPart) = pageMoved(
+                        movedDistance: abs(state.translation.width),
+                        itemWidth: itemLayout.size.width,
+                        spacing: config.spacing
+                    )
+                    if pageMovedDecimalPart < 0.00001 {
+                        let totalPageMoved = pageMovedIntPart
+                        guard totalPageMoved > 0  else { return }
+                        
+                        if state.translation.width < 0 {
+                            let newIndex = currentIndex + totalPageMoved
                             currentIndex = min(newIndex, numberOfItems - 1)
-                        } else if dragOffset > 0 {
-                            let newIndex = currentIndex - pageMoved
+                        } else if state.translation.width > 0 {
+                            let newIndex = currentIndex - totalPageMoved
                             currentIndex = max(newIndex, 0)
                         }
                     }
@@ -152,21 +152,20 @@ public struct Carousel<Content: View>: View {
                 .onEnded { state in
                     dragOffset = 0
                     
-                    let movedDistance = Int(abs(state.translation.width))
-                    let pageWidth = Int(itemLayout.size.width + config.spacing)
-
-                    let pageMoved = pageMoved(
-                        movedDistance: movedDistance,
-                        pageWidth: pageWidth
+                    let (pageMovedIntPart, pageMovedDecimalPart) = pageMoved(
+                        movedDistance: abs(state.translation.width),
+                        itemWidth: itemLayout.size.width,
+                        spacing: config.spacing
                     )
-                    
-                    guard pageMoved > 0  else { return }
+                    let totalPageMoved = pageMovedIntPart + (pageMovedDecimalPart > 0.3 ? 1 : 0)
+
+                    guard totalPageMoved > 0  else { return }
                     
                     if state.translation.width < 0 {
-                        let newIndex = currentIndex + pageMoved
+                        let newIndex = currentIndex + totalPageMoved
                         currentIndex = min(newIndex, numberOfItems - 1)
                     } else if state.translation.width > 0 {
-                        let newIndex = currentIndex - pageMoved
+                        let newIndex = currentIndex - totalPageMoved
                         currentIndex = max(newIndex, 0)
                     }
                 }
@@ -178,17 +177,16 @@ public struct Carousel<Content: View>: View {
     }
     
     private func pageMoved(
-        movedDistance: Int,
-        pageWidth: Int
-    ) -> Int {
-        let throld: Int = 60
+        movedDistance: CGFloat,
+        itemWidth: CGFloat,
+        spacing: CGFloat
+    ) -> (intPart: Int, decimalPart: CGFloat) {
+        let pageWidth = itemWidth + config.spacing
+        let pageMoved = movedDistance / pageWidth
+        let pageMovedIntPart = Int(pageMoved)
+        let pageMovedDecimalPart = pageMoved.truncatingRemainder(dividingBy: 1)
         
-        let pageCount = movedDistance / pageWidth
-        let delta = abs(movedDistance - pageWidth * pageCount)
-        
-        let pageMoved = pageCount + (delta > throld ? 1 : 0)
-        
-        return pageMoved
+        return (intPart: pageMovedIntPart, decimalPart: pageMovedDecimalPart)
     }
 }
 
