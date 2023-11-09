@@ -130,24 +130,6 @@ public struct Carousel<Content: View>: View {
                 })
                 .onChanged { state in
                     dragOffset = state.translation.width
-                    
-                    let (pageMovedIntPart, pageMovedDecimalPart) = pageMoved(
-                        movedDistance: abs(state.translation.width),
-                        itemWidth: itemLayout.size.width,
-                        spacing: config.spacing
-                    )
-                    if pageMovedDecimalPart < 0.00001 {
-                        let totalPageMoved = pageMovedIntPart
-                        guard totalPageMoved > 0  else { return }
-                        
-                        if state.translation.width < 0 {
-                            let newIndex = currentIndex + totalPageMoved
-                            currentIndex = min(newIndex, numberOfItems - 1)
-                        } else if state.translation.width > 0 {
-                            let newIndex = currentIndex - totalPageMoved
-                            currentIndex = max(newIndex, 0)
-                        }
-                    }
                 }
                 .onEnded { state in
                     dragOffset = 0
