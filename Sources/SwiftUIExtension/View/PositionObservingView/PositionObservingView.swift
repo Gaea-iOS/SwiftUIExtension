@@ -20,7 +20,6 @@ struct PositionObservingView<Content: View>: View {
             .onPreferenceChange(PreferenceKey.self) { position in
                 self.position = position
             }
-            .position(position)
     }
 }
 
