@@ -17,7 +17,7 @@ struct HapticFeedback: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func hapticFeedbackOnTapGesture(style: UIImpactFeedbackGenerator.FeedbackStyle = .soft) -> some View {
         modifier(HapticFeedback(style: style))
     }
