@@ -18,24 +18,28 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
     @State private var pin1: Pin
     @State private var pin2: Pin
 
-    @Binding private var pin: Pin
+//    @Binding private var pin: Pin
 
     @State private var currentField: PinSetupFieldPhase = .pin1
     @FocusState private var focusedField: PinSetupFieldPhase?
 
     @ViewBuilder var phase1: (Pin) -> Phase1
     @ViewBuilder var phase2: (Pin) -> Phase2
+    let matched: (Pin) -> Void
 
     public init(
-        pin: Binding<Pin>,
+//        pin: Binding<Pin>,
+        length: Pin.Length,
         @ViewBuilder phase1: @escaping (Pin) -> Phase1,
-        @ViewBuilder phase2: @escaping (Pin) -> Phase2
+        @ViewBuilder phase2: @escaping (Pin) -> Phase2,
+        matched: @escaping (Pin) -> Void
     ) {
-        pin1 = .init(length: pin.wrappedValue.length)
-        pin2 = .init(length: pin.wrappedValue.length)
-        _pin = pin
+        pin1 = .init(length: length)
+        pin2 = .init(length: length)
+//        _pin = pin
         self.phase1 = phase1
         self.phase2 = phase2
+        self.matched = matched
     }
 
     public var body: some View {
@@ -57,7 +61,7 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
                 .onChange(of: pin2.isDone) { isDone in
                     guard isDone else { return }
                     if pin1.value == pin2.value {
-                        pin = pin2
+                        matched(pin2)
                     } else {
                         reset()
                     }
@@ -80,7 +84,7 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
     }
 
     private func reset() {
-        pin.reset()
+//        pin.reset()
         pin1.reset()
         pin2.reset()
         currentField = .pin1
@@ -103,7 +107,7 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
 
 #Preview {
     PinSetupField(
-        pin: .constant(.init(length: .four)),
+        length: .four,
         phase1: { pin in
             PinField(pin: .constant(pin)) {
                 Text(pin.value)
@@ -112,6 +116,7 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
             PinField(pin: .constant(pin)) {
                 Text(pin.value)
             }
-        }
+        }, 
+        matched: { _ in }
     )
 }
