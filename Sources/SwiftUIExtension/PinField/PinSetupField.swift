@@ -100,3 +100,18 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
         )
     }
 }
+
+#Preview {
+    PinSetupField(
+        pin: .constant(.init(length: .four)),
+        phase1: { pin in
+            PinField(pin: .constant(pin)) {
+                Text(pin.value)
+            }
+        }, phase2: { pin in
+            PinField(pin: .constant(pin)) {
+                Text(pin.value)
+            }
+        }
+    )
+}
