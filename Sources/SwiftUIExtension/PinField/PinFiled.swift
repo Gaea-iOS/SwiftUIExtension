@@ -4,11 +4,11 @@
 
 import SwiftUI
 
-public struct PinField<Content: View>: View {
+struct PinField<Content: View>: View {
     @Binding var pin: Pin
     @ViewBuilder var content: () -> Content
 
-    public init(
+    init(
         pin: Binding<Pin>,
         @ViewBuilder _ content: @escaping () -> Content
     ) {
@@ -16,7 +16,7 @@ public struct PinField<Content: View>: View {
         self.content = content
     }
 
-    public var body: some View {
+    var body: some View {
         content()
             .background(
                 inputField
