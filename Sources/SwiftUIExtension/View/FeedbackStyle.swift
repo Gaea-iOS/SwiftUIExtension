@@ -7,7 +7,7 @@
 
 import UIKit
 
-public enum ShakeFeedback {
+public enum FeedbackStyle {
     case selection
 
     case light

@@ -8,13 +8,13 @@
 import SwiftUI
 
 public struct FeedbackButton<Label>: View where Label: View {
-    let feedback: ShakeFeedback
+    let feedback: FeedbackStyle
     let action: () -> Void
 
     @ViewBuilder let label: () -> Label
 
     public init(
-        feedback: ShakeFeedback = .selection,
+        feedback: FeedbackStyle = .selection,
         action: @escaping () -> Void,
         @ViewBuilder label: @escaping () -> Label
     ) {

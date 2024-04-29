@@ -8,8 +8,8 @@
 import UIKit
 import SwiftUI
 
-struct ShakeFeedbackModifier: ViewModifier {
-    let feedback: ShakeFeedback
+struct FeedbackStyleModifier: ViewModifier {
+    let feedback: FeedbackStyle
 
     func body(content: Content) -> some View {
         content
@@ -23,8 +23,8 @@ struct ShakeFeedbackModifier: ViewModifier {
 }
 
 public extension View {
-    func shakeFeedbackOnTapGesture(feedback: ShakeFeedback) -> some View {
-        modifier(ShakeFeedbackModifier(feedback: feedback))
+    func feedbackOnTapGesture(feedback: FeedbackStyle) -> some View {
+        modifier(FeedbackStyleModifier(feedback: feedback))
     }
 }
 
