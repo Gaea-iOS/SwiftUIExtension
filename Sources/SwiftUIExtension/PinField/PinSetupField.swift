@@ -51,7 +51,6 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
                     }
                 }
                 .tag(PinSetupFieldPhase.pin1)
-                .background(Color.yellow)
                 .focused($focusedField, equals: .pin1)
                 .onChange(of: pin1) { _ in
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -67,7 +66,6 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
                     }
                 }
                 .tag(PinSetupFieldPhase.pin2)
-                .background(Color.green)
                 .focused($focusedField, equals: .pin2)
                 .onChange(of: pin2) { _ in
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
