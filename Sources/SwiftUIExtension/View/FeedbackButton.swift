@@ -29,7 +29,7 @@ public struct FeedbackButton<Label>: View where Label: View {
                 action()
                 feedback.action()
             },
-            label: { label().contentShape(Rectangle()) }
+            label: label
         )
         .buttonStyle(ScaleFeedbackButtonStyle())
     }
