@@ -27,10 +27,10 @@ public struct FeedbackButton<Label>: View where Label: View {
         Button(
             action: {
                 action()
-                feedback.action()
             },
             label: label
         )
         .buttonStyle(ScaleFeedbackButtonStyle())
+        .feedbackOnTapGesture(feedback: .light)
     }
 }
