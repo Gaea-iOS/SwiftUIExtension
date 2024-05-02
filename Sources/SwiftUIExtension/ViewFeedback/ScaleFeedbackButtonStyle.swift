@@ -25,6 +25,7 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .contentShape(Rectangle())
             .scaleEffect(scale, anchor: anchor)
             .animation(animation, value: scale)
             .onChange(of: configuration.isPressed) { newValue in
