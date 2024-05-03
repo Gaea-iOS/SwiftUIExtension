@@ -30,7 +30,7 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
 
     public init(
 //        pin: Binding<Pin>,
-        length: Pin.Length,
+        length: Int,
         @ViewBuilder phase1: @escaping (Pin) -> Phase1,
         @ViewBuilder phase2: @escaping (Pin) -> Phase2,
         matched: @escaping (Pin) -> Void
@@ -105,7 +105,7 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
 
 #Preview {
     PinSetupField(
-        length: .four,
+        length: 4,
         phase1: { pin in
             PinField(pin: .constant(pin)) {
                 Text(pin.value)

@@ -45,7 +45,7 @@ public struct PinField<Content: View>: View {
 }
 
 struct PinField_Previews: PreviewProvider {
-    @State static var pin: Pin = .init(length: .four)
+    @State static var pin: Pin = .init(length: 4)
 
     static var previews: some View {
         PinField(
