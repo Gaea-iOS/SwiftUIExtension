@@ -9,9 +9,19 @@ import Foundation
 import SwiftUI
 
 public struct Shake: GeometryEffect {
-    var amount: CGFloat = 10
-    var shakesPerUnit = 3
+    let amount: CGFloat
+    let shakesPerUnit: Int
     public var animatableData: CGFloat
+    
+    public init(
+        amount: CGFloat = 10,
+        shakesPerUnit: Int = 3,
+        animatableData: CGFloat
+    ) {
+        self.amount = amount
+        self.shakesPerUnit = shakesPerUnit
+        self.animatableData = animatableData
+    }
 
     public func effectValue(size _: CGSize) -> ProjectionTransform {
         ProjectionTransform(CGAffineTransform(translationX:
