@@ -16,6 +16,7 @@ enum PinSetupFieldPhase {
 }
 
 public struct PinSetupField<Phase1: View, Phase2: View>: View {
+    private let length: Int
     @State private var pin1: Pin
     @State private var pin2: Pin
 
@@ -35,6 +36,7 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
         @ViewBuilder phase2: @escaping (Pin) -> Phase2,
         matched: @escaping (Pin) -> Void
     ) {
+        self.length = length
         pin1 = .init(length: length)
         pin2 = .init(length: length)
 //        _pin = pin
@@ -83,8 +85,8 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
     }
 
     private func reset() {
-        pin1.reset()
-        pin2.reset()
+        pin1 = .init(length: length)
+        pin2 = .init(length: length)
         currentField = .pin1
     }
 
