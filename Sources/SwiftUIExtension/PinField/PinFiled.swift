@@ -3,6 +3,7 @@
 // Created by Jerry X T Wang on 2023/5/30.
 
 import SwiftUI
+import MobileCore
 
 public struct PinField<Content: View>: View {
     @Binding var pin: Pin

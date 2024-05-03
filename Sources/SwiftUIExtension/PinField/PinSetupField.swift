@@ -4,6 +4,7 @@
 
 import Combine
 import SwiftUI
+import MobileCore
 
 extension Double {
     static let verySamll = 1e-10
@@ -82,7 +83,6 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
     }
 
     private func reset() {
-//        pin.reset()
         pin1.reset()
         pin2.reset()
         currentField = .pin1
