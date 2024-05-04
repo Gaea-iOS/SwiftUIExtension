@@ -8,25 +8,52 @@
 import SwiftUI
 import WebKit
 
-public struct WebView: UIViewRepresentable {
+import SwiftUI
+import WebKit
+
+public struct WebView: View {
+    let webView = UIKitWebView()
+    
     public let url: URL
     
     public init(url: URL) {
         self.url = url
     }
-
-    public func makeUIView(context _: Context) -> some UIView {
-        let webView = WKWebView(frame: .zero)
-
-        webView.scrollView.automaticallyAdjustsScrollIndicatorInsets = false
-        webView.scrollView.contentInset = .zero
-        webView.scrollView.contentInsetAdjustmentBehavior = .never
-//        webView.scrollView.showsVerticalScrollIndicator = false
-        Task {
-            webView.load(URLRequest(url: url))
+    
+    public var body: some View {
+        webView.onAppear {
+            webView.loadURL(url)
         }
+    }
+}
+
+
+struct UIKitWebView: UIViewRepresentable {
+    let webView: WKWebView
+    
+    init() {
+        self.webView = WKWebView()
+    }
+    
+    func makeUIView(context: Context) -> WKWebView {
+        webView.allowsBackForwardNavigationGestures = true
         return webView
     }
-
-    public func updateUIView(_: UIViewType, context _: Context) {}
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        
+    }
+    
+    func goBack(){
+        webView.goBack()
+    }
+    
+    func goForward(){
+        webView.goForward()
+    }
+    
+    
+    func loadURL(_ url: URL) {
+        webView.load(URLRequest(url: url))
+    }
 }
