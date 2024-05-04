@@ -22,8 +22,9 @@ public struct WebView: UIViewRepresentable {
         webView.scrollView.contentInset = .zero
         webView.scrollView.contentInsetAdjustmentBehavior = .never
 //        webView.scrollView.showsVerticalScrollIndicator = false
-
-        webView.load(URLRequest(url: url))
+        Task {
+            webView.load(URLRequest(url: url))
+        }
         return webView
     }
 
