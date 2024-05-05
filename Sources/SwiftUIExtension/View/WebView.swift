@@ -33,6 +33,7 @@ struct UIKitWebView: UIViewRepresentable {
     
     init() {
         self.webView = WKWebView()
+        webView.allowsLinkPreview = true
     }
     
     func makeUIView(context: Context) -> WKWebView {
