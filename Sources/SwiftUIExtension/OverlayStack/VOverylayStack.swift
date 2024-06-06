@@ -19,7 +19,7 @@ public struct VOverylayStack: Layout {
         // Calculate and return the size of the layout container.
         debugPrint("proposal size = \(proposal)")
         let subviewSizes = subviews.map { proxy in
-            proxy.sizeThatFits(.unspecified)
+            proxy.sizeThatFits(proposal)
         }
 
         let combinedHeight = subviewSizes.map(\.height).reduce(0, +)
