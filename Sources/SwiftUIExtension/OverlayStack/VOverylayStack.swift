@@ -15,8 +15,9 @@ public struct VOverylayStack: Layout {
         self.overlaying = overlaying
     }
 
-    public func sizeThatFits(proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
+    public func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
         // Calculate and return the size of the layout container.
+        debugPrint("proposal size = \(proposal)")
         let subviewSizes = subviews.map { proxy in
             proxy.sizeThatFits(.unspecified)
         }
@@ -42,9 +43,11 @@ public struct VOverylayStack: Layout {
                 height: subviewSize.height
             )
 
+            let subview = subviews[index]
+            
             x = bounds.minX + (bounds.width - subviewSize.width) / 2
-            subviews[index]
-                .place(
+            
+            subview.place(
                     at: .init(x: x, y: y),
                     anchor: .topLeading,
                     proposal: sizeProposal
@@ -61,5 +64,4 @@ public struct VOverylayStack: Layout {
         Color.yellow.frame(width: 30, height: 30)
         Color.blue.frame(width: 40, height: 40)
     }
-    .background(Color.black)
 }
