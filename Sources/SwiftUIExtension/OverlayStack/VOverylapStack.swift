@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
-public struct HOverylayStack: Layout {
-    let overlaying: CGFloat
+public struct VOverylapStack: Layout {
+    let overlapping: CGFloat
     
-    public init(overlaying: CGFloat) {
-        self.overlaying = overlaying
+    public init(overlapping: CGFloat) {
+        self.overlapping = overlapping
     }
 
     public func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
@@ -21,10 +21,10 @@ public struct HOverylayStack: Layout {
             proxy.sizeThatFits(proposal)
         }
 
-        let combinedWidth = subviewSizes.map(\.width).reduce(0, +)
-        let combineHeight = subviewSizes.map(\.height).max() ?? 0
-        let realWidth = combinedWidth - overlaying * CGFloat(subviewSizes.count - 1)
-        return .init(width: realWidth, height: combineHeight)
+        let combinedHeight = subviewSizes.map(\.height).reduce(0, +)
+        let maxWidth = subviewSizes.map(\.width).max() ?? 0
+        let realHeight = combinedHeight - overlapping * CGFloat(subviewSizes.count - 1)
+        return .init(width: maxWidth, height: realHeight)
     }
 
     public func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
@@ -33,8 +33,8 @@ public struct HOverylayStack: Layout {
             proxy.sizeThatFits(proposal)
         }
 
-        var x = bounds.minX
-        var y = 0.0
+        var x = 0.0
+        var y = bounds.minY
         for index in subviews.indices {
             let subviewSize = subviewSizes[index]
             let sizeProposal = ProposedViewSize(
@@ -42,24 +42,25 @@ public struct HOverylayStack: Layout {
                 height: subviewSize.height
             )
 
-            y = bounds.minY + (bounds.height - subviewSize.height) / 2
-            subviews[index]
-                .place(
+            let subview = subviews[index]
+            
+            x = bounds.minX + (bounds.width - subviewSize.width) / 2
+            
+            subview.place(
                     at: .init(x: x, y: y),
                     anchor: .topLeading,
                     proposal: sizeProposal
                 )
 
-            x += subviewSize.width - overlaying
+            y += subviewSize.height - overlapping
         }
     }
 }
 
 #Preview {
-    HOverylayStack(overlaying: 10) {
+    VOverylapStack(overlapping: 10) {
         Color.red.frame(width: 100, height: 100)
         Color.yellow.frame(width: 30, height: 30)
         Color.blue.frame(width: 40, height: 40)
     }
-    .background(Color.black)
 }
