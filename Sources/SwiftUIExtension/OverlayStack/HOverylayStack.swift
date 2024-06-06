@@ -15,10 +15,10 @@ public struct HOverylayStack: Layout {
         self.overlaying = overlaying
     }
 
-    public func sizeThatFits(proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
+    public func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
         // Calculate and return the size of the layout container.
         let subviewSizes = subviews.map { proxy in
-            proxy.sizeThatFits(.unspecified)
+            proxy.sizeThatFits(proposal)
         }
 
         let combinedWidth = subviewSizes.map(\.width).reduce(0, +)
@@ -27,10 +27,10 @@ public struct HOverylayStack: Layout {
         return .init(width: realWidth, height: combineHeight)
     }
 
-    public func placeSubviews(in bounds: CGRect, proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
+    public func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
         // Tell each subview where to appear.
         let subviewSizes = subviews.map { proxy in
-            proxy.sizeThatFits(.unspecified)
+            proxy.sizeThatFits(proposal)
         }
 
         var x = bounds.minX
