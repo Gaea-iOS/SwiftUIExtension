@@ -17,7 +17,6 @@ public struct VOverylayStack: Layout {
 
     public func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
         // Calculate and return the size of the layout container.
-        debugPrint("proposal size = \(proposal)")
         let subviewSizes = subviews.map { proxy in
             proxy.sizeThatFits(proposal)
         }
