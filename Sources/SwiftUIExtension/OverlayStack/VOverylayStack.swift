@@ -28,10 +28,10 @@ public struct VOverylayStack: Layout {
         return .init(width: maxWidth, height: realHeight)
     }
 
-    public func placeSubviews(in bounds: CGRect, proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
+    public func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
         // Tell each subview where to appear.
         let subviewSizes = subviews.map { proxy in
-            proxy.sizeThatFits(.unspecified)
+            proxy.sizeThatFits(proposal)
         }
 
         var x = 0.0
