@@ -24,7 +24,7 @@ extension CalendarX {
 
 private extension CalendarX.Year {
     private static func monthsInYear(_ year: Int) -> [CalendarX.Month] {
-        let months: [CalendarX.Month] = (0 ... 12).map {
+        let months: [CalendarX.Month] = (1 ... 12).map {
             .init(year: year, month: $0)
         }
         return months
