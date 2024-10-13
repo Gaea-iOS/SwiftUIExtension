@@ -87,6 +87,14 @@ extension CalendarX {
     }
 }
 
+extension DateInterval {
+    public init(day: CalendarX.Day) {
+        let date = day.date()
+        let startOfDate = CalendarX.calendar.startOfDay(for: date)
+        self = .init(start: startOfDate, duration: 3600 * 24)
+    }
+}
+
 //extension CalendarX.Day: Comparable {
 //    public static func < (lhs: Self, rhs: Self) -> Bool {
 //        lhs.year < rhs.year
