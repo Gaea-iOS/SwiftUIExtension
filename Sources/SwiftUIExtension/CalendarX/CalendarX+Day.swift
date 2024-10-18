@@ -95,10 +95,11 @@ extension DateInterval {
     }
 }
 
-//extension CalendarX.Day: Comparable {
-//    public static func < (lhs: Self, rhs: Self) -> Bool {
-//        lhs.year < rhs.year
-//            || (lhs.year == rhs.year && lhs.month < rhs.month)
-//            || (lhs.year == rhs.year && lhs.month == rhs.month && lhs.day < rhs.day)
-//    }
-//}
+extension CalendarX.Day: Comparable {
+    public static func < (lhs: Self, rhs: Self) -> Bool {
+        lhs.year < rhs.year
+            || (lhs.year == rhs.year && lhs.month < rhs.month)
+            || (lhs.year == rhs.year && lhs.month == rhs.month && lhs.day < rhs.day)
+    }
+}
+
