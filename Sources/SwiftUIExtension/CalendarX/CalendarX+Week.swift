@@ -46,6 +46,12 @@ private extension CalendarX.Week {
     }
 }
 
+public extension CalendarX.Week {
+    init(day: CalendarX.Day) {
+        self = .init(year: day.year, month: day.month, weekOfMonth: day.weekOfMonth)
+    }
+}
+
 //extension CalendarX.Week: Comparable {
 //    public static func < (lhs: Self, rhs: Self) -> Bool {
 //        lhs.year < rhs.year
