@@ -16,7 +16,7 @@ extension CalendarX {
             self.month = month
             self.weekOfMonth = weekOfMonth
             
-            let calendar = CalendarX.calendar
+            let calendar = CalendarX.current
             
             let dates = calendar.datesInWeekOfMonth(
                 weekOfMonth,
@@ -35,7 +35,7 @@ private extension CalendarX.Week {
         month: Int,
         year: Int
     ) -> [CalendarX.Day] {
-        let calendar = CalendarX.calendar
+        let calendar = CalendarX.current
         let dates = calendar.datesInWeekOfMonth(
             weekOfMonth,
             month: month,

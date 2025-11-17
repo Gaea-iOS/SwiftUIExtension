@@ -5,7 +5,7 @@
 import Foundation
 
 public struct CalendarX {
-    public static let calendar: Calendar = .init(identifier: .gregorian)
+    public static var current: Calendar = .init(identifier: .gregorian)
 }
 
 extension CalendarX {
@@ -32,7 +32,7 @@ extension CalendarX {
             components.month = month
             components.day = day
             
-            let calendar = CalendarX.calendar
+            let calendar = CalendarX.current
             let date = calendar.date(from: components)!
             self.init(date: date)
         }
@@ -52,7 +52,7 @@ extension CalendarX {
         }
 
         public init(date: Date) {
-            let calendar = CalendarX.calendar
+            let calendar = CalendarX.current
             year = calendar.component(.year, from: date)
             month = calendar.component(.month, from: date)
             weekOfMonth = calendar.component(.weekOfMonth, from: date)
@@ -61,7 +61,7 @@ extension CalendarX {
         }
 
         public func date() -> Date {
-            let calendar = CalendarX.calendar
+            let calendar = CalendarX.current
             return calendar.date(Ofyear: year, month: month, day: day)!
         }
         
@@ -72,7 +72,7 @@ extension CalendarX {
                 year: yearDiff, month: monthsDiff
             )
             
-            let calendar = CalendarX.calendar
+            let calendar = CalendarX.current
             let date = calendar.date(
                 byAdding: dateComponents,
                 to: date()
@@ -90,7 +90,7 @@ extension CalendarX {
 extension DateInterval {
     public init(day: CalendarX.Day) {
         let date = day.date()
-        let startOfDate = CalendarX.calendar.startOfDay(for: date)
+        let startOfDate = CalendarX.current.startOfDay(for: date)
         self = .init(start: startOfDate, duration: 3600 * 24)
     }
 }
