@@ -6,6 +6,7 @@
 //
 
 @testable import SwiftUIExtension
+@testable import MobileCore
 import XCTest
 
 final class CalendarExtensionTests: XCTestCase {

@@ -3,6 +3,7 @@
 // Created by Jerry X T Wang on 2023/7/6.
 
 import SwiftUI
+import MobileCore
 
 public struct WeekCalendarView<DayView>: View where DayView: View {
     public let week: CalendarX.Week
