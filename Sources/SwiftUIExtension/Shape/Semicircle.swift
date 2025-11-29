@@ -14,7 +14,7 @@ public func pointOnClosewiseCircle(
     return .init(x: x, y: y)
 }
 
-public struct ClockwiseArc {
+public struct ClockwiseArc: Sendable {
     public let startAngle: Angle
     public let endAngle: Angle
     let closewise: Bool = false

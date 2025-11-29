@@ -48,19 +48,19 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
     public var body: some View {
         TabView(selection: $currentField) {
             pinField1
-                .onChange(of: pin1.isDone) { isDone in
+                .onChange(of: pin1.isDone) { _, isDone in
                     if isDone {
                         currentField = .pin2
                     }
                 }
                 .tag(PinSetupFieldPhase.pin1)
                 .focused($focusedField, equals: .pin1)
-                .onChange(of: pin1) { _ in
+                .onChange(of: pin1) { _, _ in
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 }
 
             pinField2
-                .onChange(of: pin2.isDone) { isDone in
+                .onChange(of: pin2.isDone) { _, isDone in
                     guard isDone else { return }
                     if pin1.value == pin2.value {
                         matched(pin2)
@@ -70,7 +70,7 @@ public struct PinSetupField<Phase1: View, Phase2: View>: View {
                 }
                 .tag(PinSetupFieldPhase.pin2)
                 .focused($focusedField, equals: .pin2)
-                .onChange(of: pin2) { _ in
+                .onChange(of: pin2) { _, _ in
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 }
         }

@@ -163,7 +163,7 @@ public struct Carousel<Content: View>: View {
 //                    currentIndex = round(currentIndex)
                 }
             )
-            .onChange(of: isPressed) { newValue in
+            .onChange(of: isPressed) { _, newValue in
                 if !newValue { dragOffset = 0 }
             }
         }
@@ -216,7 +216,7 @@ struct Carousel_Previews: PreviewProvider {
         }
         .frame(width: 300)
         .background(Color.blue)
-        .onChange(of: currentIndex) { _ in
+        .onChange(of: currentIndex) { _, _ in
             let impactMed = UIImpactFeedbackGenerator(style: .medium)
             impactMed.impactOccurred()
         }

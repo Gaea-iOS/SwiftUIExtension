@@ -24,8 +24,7 @@ public struct MonthsCalendarView<MonthView>: View where MonthView: View {
 
     public var body: some View {
         TabView(selection: $currentMonth) {
-            ForEach(months.indices, id: \.self) { index in
-                let month = months[index]
+            ForEach(months, id: \.self) { month in
                 Color.clear.overlay(
                     alignment: .top
                 ) {

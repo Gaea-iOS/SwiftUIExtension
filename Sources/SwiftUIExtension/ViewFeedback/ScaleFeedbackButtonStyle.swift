@@ -28,7 +28,7 @@ public struct ScaleFeedbackButtonStyle: ButtonStyle {
             .contentShape(Rectangle())
             .scaleEffect(scale, anchor: anchor)
             .animation(animation, value: scale)
-            .onChange(of: configuration.isPressed) { newValue in
+            .onChange(of: configuration.isPressed) { _, newValue in
                 if condiction() {
                     let animationDuration = 0.1
                     if newValue {
