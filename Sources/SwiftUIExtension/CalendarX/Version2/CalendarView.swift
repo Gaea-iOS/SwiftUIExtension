@@ -38,14 +38,11 @@ struct CalendarView<MonthView>: View where MonthView: View  {
 
 extension CalendarX.Month {
     static func nMonths(around month: CalendarX.Month) -> [CalendarX.Month] {
-        let nYears: Int = 10
-        let from: CalendarX.Month = .init(year: month.year - nYears, month: month.month)
-        let to: CalendarX.Month = .init(year: month.year + nYears, month: month.month)
+        let months = ((month.year - 30)...(month.year + 20))
+            .map(CalendarX.Year.init(year:))
+            .map { $0.months }
+            .flatten()
         
-        let months = ((from.year * 12 + from.month)...(to.year * 12 + to.month))
-            .map { n in
-                CalendarX.Month(year: n / 12, month: n % 12 + 1)
-            }
         return months
     }
 }

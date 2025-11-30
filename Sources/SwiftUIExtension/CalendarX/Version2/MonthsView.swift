@@ -14,6 +14,8 @@ public struct MonthsView<MonthView>: View where MonthView: View {
     let spacing: CGFloat?
     @ViewBuilder let monthView: (CalendarX.Month) -> MonthView
     
+    @State private var monthViewHeights: [CalendarX.Month : CGFloat] = [:]
+    
     public init(
         months: [CalendarX.Month],
         currentMonth: Binding<CalendarX.Month?>,
@@ -27,10 +29,12 @@ public struct MonthsView<MonthView>: View where MonthView: View {
     }
 
     public var body: some View {
-        Text("CurrentMonth: \(currentMonth?.year)年\(currentMonth?.month)月")
         ScrollViewReader { scrollViewProxy in
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: spacing) {
+                LazyHStack(
+                    alignment: .top,
+                    spacing: spacing
+                ) {
                     ForEach(months, id: \.self) { month in
                         monthView(
                             month
@@ -39,12 +43,18 @@ public struct MonthsView<MonthView>: View where MonthView: View {
                             length
                         })
                         .id(month)
+                        .onGeometryChange(for: CGSize.self) { proxy in
+                            proxy.size
+                        } action: { newValue in
+                            monthViewHeights[month] = newValue.height
+                        }
                     }
                 }
                 .scrollTargetLayout()
             }
+            .frame(height: monthViewHeights[currentMonth ?? months.first!])
             .scrollPosition(id: $currentMonth)
-            //        .animation(.default, value: currentMonth)
+            .animation(.easeInOut, value: currentMonth)
             .scrollTargetBehavior(.viewAligned)
             .task {
                 scrollViewProxy.scrollTo(currentMonth)
@@ -54,7 +64,7 @@ public struct MonthsView<MonthView>: View where MonthView: View {
 }
 
 #Preview {
-    @Previewable @State var currentMonth: CalendarX.Month? = .init(year: 2023, month: 5)
+    @Previewable @State var currentMonth: CalendarX.Month? = .init(year: 2023, month: 4)
     
     MonthsView(
         months: [
@@ -70,8 +80,8 @@ public struct MonthsView<MonthView>: View where MonthView: View {
             Text("\(month.year)年 \(month.month)月")
             MonthView(
                 month: month,
-                horizontalSpacing: 8,
-                verticalSpacing: 8
+                horizontalSpacing: 16,
+                verticalSpacing: 16
             ) { day in
                     Text("\(day.day)")
                         .foregroundStyle(month.month == day.month ? Color.black : Color.clear)
@@ -82,8 +92,8 @@ public struct MonthsView<MonthView>: View where MonthView: View {
             .background(Color.yellow)
         }
     }
-    .containerRelativeFrame([.horizontal], { length, _ in
-        length * 0.9
-    })
+//    .containerRelativeFrame([.horizontal], { length, _ in
+//        length * 0.9
+//    })
     .background(Color.red)
 }
