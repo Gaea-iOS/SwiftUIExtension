@@ -8,7 +8,7 @@
 import SwiftUI
 import MobileCore
 
-struct CalendarView<MonthView>: View where MonthView: View  {
+struct HCalendarView<MonthView>: View where MonthView: View  {
     @State var months: [CalendarX.Month]
     @State var currentMonth: CalendarX.Month?
 
@@ -48,7 +48,7 @@ extension CalendarX.Month {
 }
 
 #Preview {
-    CalendarView(
+    HCalendarView(
         spacing: 8,
         monthView: { month in
             VStack {
