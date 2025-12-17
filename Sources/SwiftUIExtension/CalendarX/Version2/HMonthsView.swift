@@ -8,11 +8,11 @@
 import SwiftUI
 import MobileCore
 
-public struct MonthsView<MonthView>: View where MonthView: View {
+public struct HMonthsView<MonthView>: View where MonthView: View {
     public let months: [CalendarX.Month]
-    @Binding var currentMonth: CalendarX.Month?
-    let spacing: CGFloat?
-    @ViewBuilder let monthView: (CalendarX.Month) -> MonthView
+    @Binding private var currentMonth: CalendarX.Month?
+    public let spacing: CGFloat?
+    @ViewBuilder private let monthView: (CalendarX.Month) -> MonthView
     
     @State private var monthViewHeights: [CalendarX.Month : CGFloat] = [:]
     
@@ -57,7 +57,7 @@ public struct MonthsView<MonthView>: View where MonthView: View {
             .animation(.easeInOut, value: currentMonth)
             .scrollTargetBehavior(.viewAligned)
             .task {
-                scrollViewProxy.scrollTo(currentMonth)
+                scrollViewProxy.scrollTo(currentMonth, anchor: .center)
             }
         }
     }
@@ -66,7 +66,7 @@ public struct MonthsView<MonthView>: View where MonthView: View {
 #Preview {
     @Previewable @State var currentMonth: CalendarX.Month? = .init(year: 2023, month: 4)
     
-    MonthsView(
+    HMonthsView(
         months: [
             .init(year: 2023, month: 3),
             .init(year: 2023, month: 4),

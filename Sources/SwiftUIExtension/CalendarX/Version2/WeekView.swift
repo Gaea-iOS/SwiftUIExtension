@@ -10,9 +10,9 @@ import MobileCore
 
 public struct WeekView<DayView>: View where DayView: View {
     public let week: CalendarX.Week
-    let spacing: CGFloat?
+    public let spacing: CGFloat?
 
-    @ViewBuilder let dayView: (CalendarX.Day) -> DayView
+    @ViewBuilder private let dayView: (CalendarX.Day) -> DayView
     
     public init(
         week: CalendarX.Week,

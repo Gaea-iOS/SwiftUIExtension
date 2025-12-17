@@ -10,9 +10,9 @@ import MobileCore
 
 public struct MonthView<DayView>: View where DayView: View {
     public let month: CalendarX.Month
-    let alignment: Alignment
-    let horizontalSpacing: CGFloat?
-    let verticalSpacing: CGFloat?
+    public let alignment: Alignment
+    public let horizontalSpacing: CGFloat?
+    public let verticalSpacing: CGFloat?
     
     @ViewBuilder public let dayView: (CalendarX.Day) -> DayView
 
