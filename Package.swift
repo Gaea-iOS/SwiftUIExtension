@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "SwiftUIExtension",
     platforms: [
-        .iOS(.v16),
+        .iOS(.v17),
         .watchOS(.v6)
     ],
     products: [
