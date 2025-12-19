@@ -10,7 +10,7 @@ import MobileCore
 
 public struct HMonthsView<MonthView>: View where MonthView: View {
     public let months: [CalendarX.Month]
-    @Binding private var currentMonth: CalendarX.Month?
+    @Binding private var selectedMonth: CalendarX.Month?
     public let spacing: CGFloat?
     @ViewBuilder private let monthView: (CalendarX.Month) -> MonthView
     
@@ -18,12 +18,12 @@ public struct HMonthsView<MonthView>: View where MonthView: View {
     
     public init(
         months: [CalendarX.Month],
-        currentMonth: Binding<CalendarX.Month?>,
+        selectedMonth: Binding<CalendarX.Month?>,
         spacing: CGFloat? = nil,
         @ViewBuilder monthView: @escaping (CalendarX.Month) -> MonthView
     ) {
         self.months = months
-        _currentMonth = currentMonth
+        _selectedMonth = selectedMonth
         self.spacing = spacing
         self.monthView = monthView
     }
@@ -52,19 +52,19 @@ public struct HMonthsView<MonthView>: View where MonthView: View {
                 }
                 .scrollTargetLayout()
             }
-            .frame(height: monthViewHeights[currentMonth ?? months.first!])
-            .scrollPosition(id: $currentMonth)
-            .animation(.easeInOut, value: currentMonth)
+            .frame(height: monthViewHeights[selectedMonth ?? months.first!])
+            .scrollPosition(id: $selectedMonth)
+            .animation(.easeInOut, value: selectedMonth)
             .scrollTargetBehavior(.viewAligned)
             .task {
-                scrollViewProxy.scrollTo(currentMonth, anchor: .center)
+                scrollViewProxy.scrollTo(selectedMonth, anchor: .center)
             }
         }
     }
 }
 
 #Preview {
-    @Previewable @State var currentMonth: CalendarX.Month? = .init(year: 2023, month: 4)
+    @Previewable @State var selectedMonth: CalendarX.Month? = .init(year: 2023, month: 4)
     
     HMonthsView(
         months: [
@@ -73,7 +73,7 @@ public struct HMonthsView<MonthView>: View where MonthView: View {
             .init(year: 2023, month: 5),
             .init(year: 2023, month: 6),
         ],
-        currentMonth: $currentMonth,
+        selectedMonth: $selectedMonth,
         spacing: 8
     ) { month in
         VStack {

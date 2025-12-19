@@ -10,18 +10,18 @@ import MobileCore
 
 public struct HCalendarView<MonthView>: View where MonthView: View  {
     @State private var months: [CalendarX.Month]
-    @State private var currentMonth: CalendarX.Month?
+    @Binding private var selectedMonth: CalendarX.Month?
 
     public let spacing: CGFloat?
     @ViewBuilder private let monthView: (CalendarX.Month) -> MonthView
 
     public init(
+        selectedMonth: Binding<CalendarX.Month?>,
         spacing: CGFloat? = nil,
         @ViewBuilder monthView: @escaping (CalendarX.Month) -> MonthView
     ) {
-        let currentMonth: CalendarX.Month = .init(day: .today)
-        self.currentMonth = currentMonth
-        months = CalendarX.Month.nMonths(around: currentMonth)
+        _selectedMonth = selectedMonth
+        months = CalendarX.Month.nMonths()
         self.spacing = spacing
         self.monthView = monthView
     }
@@ -29,7 +29,7 @@ public struct HCalendarView<MonthView>: View where MonthView: View  {
     public var body: some View {
         HMonthsView(
             months: months,
-            currentMonth: $currentMonth,
+            selectedMonth: $selectedMonth,
             spacing: spacing,
             monthView: monthView
         )
@@ -37,8 +37,9 @@ public struct HCalendarView<MonthView>: View where MonthView: View  {
 }
 
 extension CalendarX.Month {
-    static func nMonths(around month: CalendarX.Month) -> [CalendarX.Month] {
-        let months = ((month.year - 100)...(month.year + 50))
+    static func nMonths() -> [CalendarX.Month] {
+        let currentMonth: CalendarX.Month = .current()
+        let months = ((currentMonth.year - 100)...(currentMonth.year + 50))
             .map(CalendarX.Year.init(year:))
             .map { $0.months }
             .flatten()
@@ -48,7 +49,10 @@ extension CalendarX.Month {
 }
 
 #Preview {
+    @Previewable @State var selectedMonth: CalendarX.Month? = .init(year: 2023, month: 4)
+
     HCalendarView(
+        selectedMonth: $selectedMonth,
         spacing: 8,
         monthView: { month in
             VStack {
