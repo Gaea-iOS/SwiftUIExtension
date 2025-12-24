@@ -1,14 +1,14 @@
 {
+  "originHash" : "073d520206fb6d41ea6b370d3eff3db64826a32bb74648db93a521da623d32a4",
   "pins" : [
     {
       "identity" : "mobilecore",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Gaea-iOS/MobileCore.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "d55dccc88069b27e10c6ad4af795738b0a3bb811"
+        "revision" : "78b1ab7df391725caf0abc64b2f5796d9f805cee"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
