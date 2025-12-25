@@ -16,12 +16,13 @@ public struct HCalendarView<MonthView>: View where MonthView: View  {
     @ViewBuilder private let monthView: (CalendarX.Month) -> MonthView
 
     public init(
+        months: [CalendarX.Month],
         selectedMonth: Binding<CalendarX.Month?>,
         spacing: CGFloat? = nil,
         @ViewBuilder monthView: @escaping (CalendarX.Month) -> MonthView
     ) {
         _selectedMonth = selectedMonth
-        months = CalendarX.Month.nMonths()
+        self.months = months
         self.spacing = spacing
         self.monthView = monthView
     }
@@ -37,9 +38,8 @@ public struct HCalendarView<MonthView>: View where MonthView: View  {
 }
 
 extension CalendarX.Month {
-    static func nMonths() -> [CalendarX.Month] {
-        let currentMonth: CalendarX.Month = .current()
-        let months = ((currentMonth.year - 100)...(currentMonth.year + 50))
+    public static func months(fromYear: Int, toYear: Int) -> [CalendarX.Month] {
+        let months = (fromYear...toYear)
             .map(CalendarX.Year.init(year:))
             .map { $0.months }
             .flatten()
@@ -49,9 +49,10 @@ extension CalendarX.Month {
 }
 
 #Preview {
-    @Previewable @State var selectedMonth: CalendarX.Month? = .init(year: 2023, month: 4)
+    @Previewable @State var selectedMonth: CalendarX.Month? = .init(year: 2025, month: 4)
 
     HCalendarView(
+        months: CalendarX.Month.months(fromYear: 2025, toYear: 2025),
         selectedMonth: $selectedMonth,
         spacing: 8,
         monthView: { month in
