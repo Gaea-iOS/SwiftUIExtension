@@ -7,9 +7,10 @@
 
 import SwiftUI
 import MobileCore
+import Collections
 
 public struct HMonthsView<MonthView>: View where MonthView: View {
-    public let months: [CalendarX.Month]
+    public let months: OrderedSet<CalendarX.Month>
     @Binding private var selectedMonth: CalendarX.Month?
     public let spacing: CGFloat?
     @ViewBuilder private let monthView: (CalendarX.Month) -> MonthView
@@ -17,7 +18,7 @@ public struct HMonthsView<MonthView>: View where MonthView: View {
     @State private var monthViewHeights: [CalendarX.Month : CGFloat] = [:]
     
     public init(
-        months: [CalendarX.Month],
+        months: OrderedSet<CalendarX.Month>,
         selectedMonth: Binding<CalendarX.Month?>,
         spacing: CGFloat? = nil,
         @ViewBuilder monthView: @escaping (CalendarX.Month) -> MonthView

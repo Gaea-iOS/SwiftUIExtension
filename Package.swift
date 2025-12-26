@@ -22,6 +22,10 @@ let package = Package(
         .package(
             url: "https://github.com/Gaea-iOS/MobileCore.git",
             revision: "2723e08e06180271f7813f31af48d6cdcbadd4e5"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-collections.git",
+                .upToNextMinor(from: "1.2.1")
         )
     ],
     targets: [
@@ -30,7 +34,8 @@ let package = Package(
         .target(
             name: "SwiftUIExtension",
             dependencies: [
-                .product(name: "MobileCore", package: "MobileCore")
+                .product(name: "MobileCore", package: "MobileCore"),
+                .product(name: "Collections", package: "swift-collections")
             ]
         ),
         .testTarget(

@@ -7,16 +7,17 @@
 
 import SwiftUI
 import MobileCore
+import Collections
 
 public struct HCalendarView<MonthView>: View where MonthView: View  {
-    @State private var months: [CalendarX.Month]
+    @State private var months: OrderedSet<CalendarX.Month>
     @Binding private var selectedMonth: CalendarX.Month?
 
     public let spacing: CGFloat?
     @ViewBuilder private let monthView: (CalendarX.Month) -> MonthView
 
     public init(
-        months: [CalendarX.Month],
+        months: OrderedSet<CalendarX.Month>,
         selectedMonth: Binding<CalendarX.Month?>,
         spacing: CGFloat? = nil,
         @ViewBuilder monthView: @escaping (CalendarX.Month) -> MonthView
@@ -38,13 +39,13 @@ public struct HCalendarView<MonthView>: View where MonthView: View  {
 }
 
 extension CalendarX.Month {
-    public static func months(fromYear: Int, toYear: Int) -> [CalendarX.Month] {
+    public static func months(fromYear: Int, toYear: Int) -> OrderedSet<CalendarX.Month> {
         let months = (fromYear...toYear)
             .map(CalendarX.Year.init(year:))
             .map { $0.months }
             .flatten()
         
-        return months
+        return .init(months)
     }
 }
 
