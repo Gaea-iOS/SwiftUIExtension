@@ -36,10 +36,10 @@ public struct MonthView<DayView>: View where DayView: View {
             horizontalSpacing: horizontalSpacing,
             verticalSpacing: verticalSpacing
         ) {
-            let weeks = month.weeks
+            let weeks = month.weeks()
             ForEach(weeks, id: \.self) { week in
                 GridRow {
-                    let days = week.days
+                    let days = week.days()
                     ForEach(days, id: \.self) { day in
                         dayView(day)
                     }

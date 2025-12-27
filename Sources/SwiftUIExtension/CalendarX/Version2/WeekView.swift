@@ -30,7 +30,7 @@ public struct WeekView<DayView>: View where DayView: View {
             verticalSpacing: spacing
         ) {
             GridRow {
-                let days = week.days
+                let days = week.days()
                 ForEach(days, id: \.self) { day in
                     dayView(day)
                 }
