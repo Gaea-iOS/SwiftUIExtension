@@ -22,7 +22,7 @@ public struct MonthCalendarView<WeekView>: View where WeekView: View {
     }
 
     public var body: some View {
-        let weeks = month.weeks()
+        let weeks = month.weeks
         
         VStack(spacing: spacing) {
             ForEach(weeks.indices, id: \.self) { index in

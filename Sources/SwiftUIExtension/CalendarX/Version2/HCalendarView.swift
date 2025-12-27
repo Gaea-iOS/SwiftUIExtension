@@ -42,7 +42,7 @@ extension CalendarX.Month {
     public static func months(fromYear: Int, toYear: Int) -> OrderedSet<CalendarX.Month> {
         let months = (fromYear...toYear)
             .map(CalendarX.Year.init(year:))
-            .map { $0.months() }
+            .map { $0.months }
             .flatten()
         
         return .init(months)
