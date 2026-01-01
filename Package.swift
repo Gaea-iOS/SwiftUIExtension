@@ -21,7 +21,7 @@ let package = Package(
         // .package(url: /* package url */, from: "1.0.0"),
         .package(
             url: "https://github.com/Gaea-iOS/MobileCore.git",
-            revision: "55badae250c14458d0a567ecea0d6273c14f070a"
+            revision: "e205f3d9b3311d3df359af0628206507b8b81204"
         ),
         .package(
             url: "https://github.com/apple/swift-collections.git",
