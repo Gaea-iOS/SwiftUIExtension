@@ -10,20 +10,23 @@ import MobileCore
 
 public struct MonthView<DayView>: View where DayView: View {
     public let month: CalendarX.Month
+    public let calendar: Calendar
     public let alignment: Alignment
     public let horizontalSpacing: CGFloat?
     public let verticalSpacing: CGFloat?
     
-    @ViewBuilder public let dayView: (CalendarX.Day) -> DayView
+    @ViewBuilder public let dayView: (CalendarX.Day, Calendar) -> DayView
 
     public init(
         month: CalendarX.Month,
+        in calendar: Calendar,
         alignment: Alignment = .center,
         horizontalSpacing: CGFloat? = nil,
         verticalSpacing: CGFloat? = nil,
-        @ViewBuilder dayView: @escaping (CalendarX.Day) -> DayView
+        @ViewBuilder dayView: @escaping (CalendarX.Day, Calendar) -> DayView
     ) {
         self.month = month
+        self.calendar = calendar
         self.alignment = alignment
         self.horizontalSpacing = horizontalSpacing
         self.verticalSpacing = verticalSpacing
@@ -36,12 +39,12 @@ public struct MonthView<DayView>: View where DayView: View {
             horizontalSpacing: horizontalSpacing,
             verticalSpacing: verticalSpacing
         ) {
-            let weeks = month.weeks()
+            let weeks = month.weeks(in: calendar)
             ForEach(weeks, id: \.self) { week in
                 GridRow {
-                    let days = week.days()
+                    let days = week.days(in: calendar)
                     ForEach(days, id: \.self) { day in
-                        dayView(day)
+                        dayView(day, calendar)
                     }
                 }
             }
@@ -53,9 +56,10 @@ public struct MonthView<DayView>: View where DayView: View {
 #Preview {
     MonthView(
         month: .init(year: 2023, month: 7),
+        in: .init(identifier: .gregorian),
         horizontalSpacing: 2,
         verticalSpacing: 2
-    ) { day in
+    ) { day, _ in
         DayView(day: day)
             .background(Color.yellow)
     }

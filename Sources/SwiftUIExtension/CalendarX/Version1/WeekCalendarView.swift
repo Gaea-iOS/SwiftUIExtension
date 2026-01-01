@@ -7,27 +7,30 @@ import MobileCore
 
 public struct WeekCalendarView<DayView>: View where DayView: View {
     public let week: CalendarX.Week
+    public let calendar: Calendar
     public let spacing: CGFloat
 
-    @ViewBuilder public let dayView: (CalendarX.Day) -> DayView
+    @ViewBuilder public let dayView: (CalendarX.Day, Calendar) -> DayView
     
     public init(
         week: CalendarX.Week,
+        in calendar: Calendar,
         spacing: CGFloat,
-        @ViewBuilder dayView: @escaping (CalendarX.Day) -> DayView
+        @ViewBuilder dayView: @escaping (CalendarX.Day, Calendar) -> DayView
     ) {
         self.week = week
+        self.calendar = calendar
         self.spacing = spacing
         self.dayView = dayView
     }
 
     public var body: some View {
-        let days = week.days()
+        let days = week.days(in: calendar)
         
         HStack(spacing: spacing) {
             ForEach(days.indices, id: \.self) { index in
                 let day = days[index]
-                dayView(day)
+                dayView(day, calendar)
             }
         }
     }
@@ -41,8 +44,11 @@ struct WeekCalendarView_Previews: PreviewProvider {
                 month: 7,
                 weekOfMonth: 1
             ),
+            in: .init(identifier: .gregorian),
             spacing: 2,
-            dayView: DayView.init(day:)
+            dayView: { day, _ in
+                DayView(day: day)
+            }
         )
         .background(Color.yellow)
     }

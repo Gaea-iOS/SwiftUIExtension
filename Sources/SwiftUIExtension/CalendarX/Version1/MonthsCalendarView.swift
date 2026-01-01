@@ -7,17 +7,19 @@ import MobileCore
 
 public struct MonthsCalendarView<MonthView>: View where MonthView: View {
     public let months: [CalendarX.Month]
-
+    public let calendar: Calendar
     @Binding public var currentMonth: CalendarX.Month
 
-    @ViewBuilder public let monthView: (CalendarX.Month) -> MonthView
+    @ViewBuilder public let monthView: (CalendarX.Month, Calendar) -> MonthView
     
     public init(
         months: [CalendarX.Month],
+        in calendar: Calendar,
         currentMonth: Binding<CalendarX.Month>,
-        @ViewBuilder monthView: @escaping (CalendarX.Month) -> MonthView
+        @ViewBuilder monthView: @escaping (CalendarX.Month, Calendar) -> MonthView
     ) {
         self.months = months
+        self.calendar = calendar
         _currentMonth = currentMonth
         self.monthView = monthView
     }
@@ -29,7 +31,7 @@ public struct MonthsCalendarView<MonthView>: View where MonthView: View {
                     alignment: .top
                 ) {
                     monthView(
-                        month
+                        month, calendar
                     )
                 }
                 .tag(month)
@@ -56,16 +58,21 @@ struct MonthsCalendarView_Previews: PreviewProvider {
                 .init(year: 2023, month: 7),
                 .init(year: 2023, month: 4),
             ],
+            in: .init(identifier: .gregorian),
             currentMonth: $currentMonth
-        ) { month in
+        ) { month, calendar in
             MonthCalendarView(
                 month: month,
+                in: calendar,
                 spacing: 2,
-                weekView: { week in
+                weekView: { week, calendar in
                     WeekCalendarView(
                         week: week,
+                        in: calendar,
                         spacing: 2,
-                        dayView: DayView.init(day:)
+                        dayView: { day, _ in
+                            DayView(day: day)
+                        }
                     )
                 }
             )            

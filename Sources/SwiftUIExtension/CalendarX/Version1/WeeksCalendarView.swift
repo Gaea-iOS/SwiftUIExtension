@@ -7,17 +7,19 @@ import MobileCore
 
 public struct WeeksCalendarView<WeekView>: View where WeekView: View {
     public let weeks: [CalendarX.Week]
-
+    public let calendar: Calendar
     @Binding public var currentWeek: CalendarX.Week
 
-    @ViewBuilder public let weekView: (CalendarX.Week) -> WeekView
+    @ViewBuilder public let weekView: (CalendarX.Week, Calendar) -> WeekView
     
     public init(
         weeks: [CalendarX.Week],
+        in calendar: Calendar,
         currentWeek: Binding<CalendarX.Week>,
-        @ViewBuilder weekView: @escaping (CalendarX.Week) -> WeekView
+        @ViewBuilder weekView: @escaping (CalendarX.Week, Calendar) -> WeekView
     ) {
         self.weeks = weeks
+        self.calendar = calendar
         _currentWeek = currentWeek
         self.weekView = weekView
     }
@@ -30,7 +32,7 @@ public struct WeeksCalendarView<WeekView>: View where WeekView: View {
                     alignment: .top
                 ) {
                     weekView(
-                        week
+                        week, calendar
                     )
                 }
                 .tag(week)
@@ -49,12 +51,16 @@ struct WeeksCalendarView_Previews: PreviewProvider {
                 .init(year: 2022, month: 5, weekOfMonth: 3),
                 .init(year: 2025, month: 7, weekOfMonth: 4),
             ],
+            in: .init(identifier: .gregorian),
             currentWeek: .constant(.init(year: 2023, month: 3, weekOfMonth: 1))
-        ) { week in
+        ) { week, calendar in
             WeekCalendarView(
                 week: week,
+                in: calendar,
                 spacing: 2,
-                dayView: DayView.init(day:)
+                dayView: { day, _ in
+                    DayView(day: day)
+                }
             )
             .background(Color.yellow)
         }

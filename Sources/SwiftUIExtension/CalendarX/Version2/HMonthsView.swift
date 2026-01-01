@@ -11,20 +11,23 @@ import Collections
 
 public struct HMonthsView<MonthView>: View where MonthView: View {
     public let months: OrderedSet<CalendarX.Month>
+    public let calendar: Calendar
     @Binding private var selectedMonth: CalendarX.Month?
     public let spacing: CGFloat?
-    @ViewBuilder private let monthView: (CalendarX.Month) -> MonthView
+    @ViewBuilder private let monthView: (CalendarX.Month, Calendar) -> MonthView
     
     @State private var monthViewHeights: [CalendarX.Month : CGFloat] = [:]
     
     public init(
         months: OrderedSet<CalendarX.Month>,
         selectedMonth: Binding<CalendarX.Month?>,
+        in calendar: Calendar,
         spacing: CGFloat? = nil,
-        @ViewBuilder monthView: @escaping (CalendarX.Month) -> MonthView
+        @ViewBuilder monthView: @escaping (CalendarX.Month, Calendar) -> MonthView
     ) {
         self.months = months
         _selectedMonth = selectedMonth
+        self.calendar = calendar
         self.spacing = spacing
         self.monthView = monthView
     }
@@ -38,7 +41,7 @@ public struct HMonthsView<MonthView>: View where MonthView: View {
                 ) {
                     ForEach(months, id: \.self) { month in
                         monthView(
-                            month
+                            month, calendar
                         )
                         .containerRelativeFrame([.horizontal], { length, _ in
                             length
@@ -75,15 +78,17 @@ public struct HMonthsView<MonthView>: View where MonthView: View {
             .init(year: 2023, month: 6),
         ],
         selectedMonth: $selectedMonth,
+        in: .init(identifier: .gregorian),
         spacing: 8
-    ) { month in
+    ) { month, calenar  in
         VStack {
             Text("\(month.year)年 \(month.month)月")
             MonthView(
                 month: month,
+                in: calenar,
                 horizontalSpacing: 16,
                 verticalSpacing: 16
-            ) { day in
+            ) { day, _ in
                     Text("\(day.day)")
                         .foregroundStyle(month.month == day.month ? Color.black : Color.clear)
                         .frame(maxWidth: .infinity)

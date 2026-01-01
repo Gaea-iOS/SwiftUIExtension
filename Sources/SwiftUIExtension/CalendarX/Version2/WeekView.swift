@@ -10,16 +10,19 @@ import MobileCore
 
 public struct WeekView<DayView>: View where DayView: View {
     public let week: CalendarX.Week
+    public let calendar: Calendar
     public let spacing: CGFloat?
 
-    @ViewBuilder private let dayView: (CalendarX.Day) -> DayView
+    @ViewBuilder private let dayView: (CalendarX.Day, Calendar) -> DayView
     
     public init(
         week: CalendarX.Week,
+        in calendar: Calendar,
         spacing: CGFloat? = nil,
-        @ViewBuilder dayView: @escaping (CalendarX.Day) -> DayView
+        @ViewBuilder dayView: @escaping (CalendarX.Day, Calendar) -> DayView
     ) {
         self.week = week
+        self.calendar = calendar
         self.spacing = spacing
         self.dayView = dayView
     }
@@ -30,9 +33,9 @@ public struct WeekView<DayView>: View where DayView: View {
             verticalSpacing: spacing
         ) {
             GridRow {
-                let days = week.days()
+                let days = week.days(in: calendar)
                 ForEach(days, id: \.self) { day in
-                    dayView(day)
+                    dayView(day, calendar)
                 }
             }
         }
@@ -46,8 +49,11 @@ public struct WeekView<DayView>: View where DayView: View {
             month: 7,
             weekOfMonth: 1
         ),
+        in: .init(identifier: .gregorian),
         spacing: 2,
-        dayView: DayView.init(day:)
+        dayView: { day, _ in
+            DayView(day: day)
+        }
     )
     .background(Color.yellow)
 }
